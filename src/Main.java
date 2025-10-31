@@ -12,9 +12,11 @@ public class Main {
 
         int b = 123;
 
-
+        System.out.println("Создаем мапу  5х5");
         Field field = new Field(5, 5);
+        System.out.println("Создаем объект класса Simulation");
         Simulation simulation = new Simulation(field);
+        System.out.println("Запускаем цикл симуляции");
         simulation.startSimulation();
 
         int a = 123;
