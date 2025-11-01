@@ -1,5 +1,5 @@
-import Entity.Creature;
-import Entity.*;
+import Gameplay.GameLoop;
+import Gameplay.Simulation;
 import Map.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -10,16 +10,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int b = 123;
+        GameLoop gameLoop = new GameLoop();
+        gameLoop.startGame();
 
-        System.out.println("Создаем мапу  5х5");
-        Field field = new Field(5, 5);
-        System.out.println("Создаем объект класса Simulation");
-        Simulation simulation = new Simulation(field);
-        System.out.println("Запускаем цикл симуляции");
-        simulation.startSimulation();
-
-        int a = 123;
+//        int b = 123;
+//
+//        Field field = new Field(5, 5);
+//        Simulation simulation = new Simulation(field);
+//        simulation.startSimulation();
+//
+//        int a = 123;
 //        field.field.put(new Coordinates(0,0), new Herbivore(new Coordinates(0,0), 2, 5));
 //        field.field.put(new Coordinates(1,1), new Predator(new Coordinates(1,1), 1, 3, 3));
 //        field.field.put(new Coordinates(0,2), new Grass(new Coordinates(0,2)));

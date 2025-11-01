@@ -29,13 +29,8 @@ public abstract class Creature extends Entity {
     }
 
     protected void moveTheTarget(Field field, List<Node> path){
-        System.out.println("Приступить к удалению текущих координат с карты");
         field.field.remove(coordinate);
-        System.out.println("Присвоить координатам существа кооординаты из пути");
         coordinate=path.get(getSpeed()).coordinates;
-        System.out.printf("Теперь координаты существа равны [%s,%s]",coordinate.x+1,coordinate.y+1);
-        System.out.println("");
-        System.out.println("Поместить по данным координатам существо.");
         field.field.put(coordinate,this);
     }
 
