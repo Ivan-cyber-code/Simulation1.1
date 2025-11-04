@@ -14,6 +14,16 @@ public abstract class Creature extends Entity {
         this.hp = hp;
     }
 
+    private int moveConter;
+
+    public int getMoveConter() {
+        return moveConter;
+    }
+
+    public void setMoveConter(int moveConter) {
+        this.moveConter = moveConter;
+    }
+
     private int speed, hp;
 
     public int getSpeed() {

@@ -18,6 +18,7 @@ public class Simulation {
 
     public void nextTurn() {
         moveCounter++;
+
         System.out.printf("""
                 -----------------ХОД: %s -------------------------------
                 """, moveCounter);
@@ -26,8 +27,20 @@ public class Simulation {
                 Всего зайцев: %s;
                 Всехо волков: %s.
                 """, numberOfHarbivore(), numberOfPredator());
+
         turnActions.makeAMoveWithAllCreatures(field);
+
         renderer.showMap(field);
+
+        if (!thereIsGrass(field)) {
+            int count=0;
+            for (int i = numberOfGrass()-1; i <= numberOfHarbivore(); i++) {
+                initActions.plantGrass(field);
+                count++;
+            }
+            System.out.printf("Было посажено %s травы",count);
+            System.out.println();
+        }
     }
 
     private int numberOfPredator() {
@@ -59,15 +72,6 @@ public class Simulation {
                 Thread.sleep(1000); // Пауза 2 секунды
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-            }
-
-            if (!thereIsGrass(field)) {
-                int count=0;
-                for (int i = numberOfGrass()-1; i <= numberOfHarbivore(); i++) {
-                    initActions.plantGrass(field);
-                    count++;
-                }
-                System.out.println("Было посажено %s травы");
             }
 
             if (!thereIsHerbivore(field)) {
