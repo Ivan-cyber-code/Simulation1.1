@@ -7,27 +7,44 @@ import java.util.Random;
 
 public class InitActions extends Actions {
 
+    int coefficientEntity;
+
+
     public void putEntitiesInTheirDefoultPositions(Field field) {
 
-        plantGrass(field);
+        coefficientEntity=(field.columns*field.lines)/10;
 
+        for (int i = 0; i < coefficientEntity; i++) {
+            plantGrass(field);
+            createHerbivore(field);
+            createPredator(field);
+            createRock(field);
+            createTree(field);
+        }
+    }
+
+    private void createTree(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Tree tree = new Tree(coordinates);
+        field.field.put(coordinates, tree);
+    }
+
+    private void createRock(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Rock rock = new Rock(coordinates);
+        field.field.put(coordinates, rock);
+    }
+
+    private void createPredator(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Predator predator = new Predator(coordinates,1, 3, 3);
+        field.field.put(coordinates, predator);
+    }
+
+    private void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Herbivore herbivore = new Herbivore(coordinates,1, 4);
         field.field.put(coordinates, herbivore);
-
-
-        coordinates = createNewUniqueCoordinates(field);
-        Predator predator = new Predator(coordinates,1, 3, 3);
-        field.field.put(coordinates, predator);
-
-        coordinates = createNewUniqueCoordinates(field);
-        Rock rock = new Rock(coordinates);
-        field.field.put(coordinates, rock);
-
-        coordinates = createNewUniqueCoordinates(field);
-        Tree tree = new Tree(coordinates);
-        field.field.put(coordinates, tree);
-
     }
 
     public void plantGrass(Field field) {

@@ -17,14 +17,43 @@ public class Simulation {
     }
 
     public void nextTurn() {
+        moveCounter++;
+        System.out.printf("""
+                -----------------ХОД: %s -------------------------------
+                """, moveCounter);
+        System.out.println();
+        System.out.printf("""
+                Всего зайцев: %s;
+                Всехо волков: %s.
+                """, numberOfHarbivore(), numberOfPredator());
         turnActions.makeAMoveWithAllCreatures(field);
         renderer.showMap(field);
     }
 
+    private int numberOfPredator() {
+        int count=0;
+        for (Entity entity : field.field.values()){
+            if (entity instanceof Predator){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int numberOfHarbivore() {
+        int count=0;
+        for (Entity entity : field.field.values()){
+            if (entity instanceof Herbivore){
+                count++;
+            }
+        }
+        return count;
+    }
+
+
     public void startSimulation() {
         while (true) {
 
-            moveCounter++;
             nextTurn();
             try {
                 Thread.sleep(1000); // Пауза 2 секунды
@@ -33,14 +62,28 @@ public class Simulation {
             }
 
             if (!thereIsGrass(field)) {
-                initActions.plantGrass(field);
-                renderer.showMap(field);
+                int count=0;
+                for (int i = numberOfGrass()-1; i <= numberOfHarbivore(); i++) {
+                    initActions.plantGrass(field);
+                    count++;
+                }
+                System.out.println("Было посажено %s травы");
             }
 
             if (!thereIsHerbivore(field)) {
-                break;
+                throw new RuntimeException();
             }
         }
+    }
+
+    private int numberOfGrass() {
+        int count=0;
+        for (Entity entity : field.field.values()){
+            if (entity instanceof Grass){
+                count++;
+            }
+        }
+        return count;
     }
 
     private boolean thereIsHerbivore(Field field) {
@@ -53,10 +96,15 @@ public class Simulation {
     }
 
     private boolean thereIsGrass(Field field) {
+        int countGrass = -1;
+        int countHerbivore = numberOfHarbivore();
         for (Entity entity : field.field.values()) {
             if (entity instanceof Grass) {
-                return true;
+                countGrass++;
             }
+        }
+        if (countGrass>=countHerbivore){
+            return true;
         }
         return false;
     }

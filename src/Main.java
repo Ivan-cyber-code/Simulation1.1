@@ -2,6 +2,8 @@ import Gameplay.GameLoop;
 import Gameplay.Simulation;
 import Map.*;
 
+import java.util.Scanner;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -10,9 +12,12 @@ public class Main {
 
     public static void main(String[] args) {
 
+//        Scanner scanner = new Scanner(System.in);
+
         GameLoop gameLoop = new GameLoop();
         gameLoop.startGame();
 
+//        scanner.close();
 //        int b = 123;
 //
 //        Field field = new Field(5, 5);
