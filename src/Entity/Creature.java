@@ -20,8 +20,8 @@ public abstract class Creature extends Entity {
         return moveConter;
     }
 
-    public void setMoveConter(int moveConter) {
-        this.moveConter = moveConter;
+    public void setMoveConter() {
+        this.moveConter = ++moveConter;
     }
 
     private int speed, hp;
@@ -39,9 +39,13 @@ public abstract class Creature extends Entity {
     }
 
     protected void moveTheTarget(Field field, List<Node> path){
+        setHp(-1);
         field.field.remove(coordinate);
         coordinate=path.get(getSpeed()).coordinates;
         field.field.put(coordinate,this);
+        if (getHp() <= 0) {
+            field.field.remove(coordinate);
+        }
     }
 
     protected List<Node> findAWaytothegoal(Coordinates current, Coordinates goal, Field field) {

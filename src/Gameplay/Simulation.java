@@ -23,12 +23,14 @@ public class Simulation {
                 -----------------ХОД: %s -------------------------------
                 """, moveCounter);
         System.out.println();
+
+        turnActions.makeAMoveWithAllCreatures(field);
+
         System.out.printf("""
                 Всего зайцев: %s;
                 Всехо волков: %s.
                 """, numberOfHarbivore(), numberOfPredator());
-
-        turnActions.makeAMoveWithAllCreatures(field);
+        System.out.println();
 
         renderer.showMap(field);
 
@@ -74,10 +76,19 @@ public class Simulation {
                 Thread.currentThread().interrupt();
             }
 
-            if (!thereIsHerbivore(field)) {
+            if (!thereIsHerbivore(field) || !thereIsPredator(field)) {
                 throw new RuntimeException();
             }
         }
+    }
+
+    public boolean thereIsPredator(Field field) {
+        for (Entity entity:field.field.values()){
+            if (entity instanceof Predator){
+                return true;
+            }
+        }
+        return false;
     }
 
     private int numberOfGrass() {
@@ -90,7 +101,7 @@ public class Simulation {
         return count;
     }
 
-    private boolean thereIsHerbivore(Field field) {
+    public boolean thereIsHerbivore(Field field) {
         for (Entity entity : field.field.values()) {
             if (entity instanceof Herbivore) {
                 return true;

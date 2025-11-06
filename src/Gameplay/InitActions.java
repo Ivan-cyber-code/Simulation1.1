@@ -35,15 +35,15 @@ public class InitActions extends Actions {
         field.field.put(coordinates, rock);
     }
 
-    private void createPredator(Field field) {
+    public void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Predator predator = new Predator(coordinates,1, 3, 3);
         field.field.put(coordinates, predator);
     }
 
-    private void createHerbivore(Field field) {
+    public void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Herbivore herbivore = new Herbivore(coordinates,1, 4);
+        Herbivore herbivore = new Herbivore(coordinates,1, 5);
         field.field.put(coordinates, herbivore);
     }
 

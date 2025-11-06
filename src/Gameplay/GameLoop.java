@@ -34,6 +34,15 @@ public class GameLoop {
                 Мир создан с указанными размерами.
                 Нажмите 1 что бы сделать ход всеми существами.
                 Нажмите 2 что бы запустить режим постоянного взаимодействия.
+                
+                P.S. 
+                1. Симуляция будет выполнять до тех пор пока в живых  не останутся один вид существ (волки или зайцы).
+                2. Волк и заяц могут терять и/или восполнять здоровье в процессе хода:
+                   2.1 Заяй теряет 1HP если не ест траву и/или 3HP если поддвергся нападению со стороны волков (На старте заяц имеет 5HP);
+                   2.1.1 Зайц восполняет 3HP если ест траву.
+                   2.2 Волк теряет 1HP если не атакует зайца.
+                   2.2.1 Волк восполняет 3HP если атакует зайца
+                 
                 """);
         simulation.renderer.showMap(simulation.field);
 
@@ -51,8 +60,20 @@ public class GameLoop {
                 }
             }
         } catch (RuntimeException runtimeException) {
-            simulation.renderer.showMap(simulation.field);
-            System.out.println("Волки победили");
+            if (simulation.thereIsPredator(simulation.field)){
+                System.out.println("""
+                        -------------Конец---------------
+                        Волки победили!!!
+                        """);
+                simulation.renderer.showMap(simulation.field);
+            } else {
+                System.out.println("""
+                        -------------Конец---------------
+                        Зайцы победили!!!
+                        """);
+                simulation.renderer.showMap(simulation.field);
+            }
+
         }
 
         scanner.close();

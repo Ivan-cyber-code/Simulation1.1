@@ -36,7 +36,7 @@ public class Herbivore extends Creature {
 
         coordinate = grass.coordinate;
         System.out.println();
-        setHp(1);
+        setHp(3);
         field.field.put(coordinate, this);
     }
 
@@ -46,6 +46,8 @@ public class Herbivore extends Creature {
         Grass grass = getGrass(field);
 
         List<Node> path = findAWaytothegoal(coordinate, grass.coordinate, field);
+
+        setMoveConter();
 
         if (path.size() - 1 > getSpeed()) {
             moveTheTarget(field, path);

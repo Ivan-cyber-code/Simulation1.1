@@ -26,6 +26,7 @@ public class Predator extends Creature {
 
         List<Node> path = findAWaytothegoal(coordinate, herbivore.coordinate, field);
 
+        setMoveConter();
 
         if (path.size() - 1 > getSpeed()) {
             moveTheTarget(field, path);
@@ -40,12 +41,12 @@ public class Predator extends Creature {
 
     private void attack(Field field, Herbivore herbivore) {
         herbivore.setHp(-1 * getAttsckPower());
-
+        this.setHp(3);
         if (herbivore.getHp() <= 0) {
             field.field.remove(herbivore.coordinate);
             field.field.remove(coordinate);
             coordinate = herbivore.coordinate;
-            field.field.put(coordinate,this);
+            field.field.put(coordinate, this);
         }
     }
 
