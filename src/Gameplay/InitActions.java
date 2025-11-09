@@ -37,13 +37,13 @@ public class InitActions extends Actions {
 
     public void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Predator predator = new Predator(coordinates,1, 3, 3);
+        Predator predator = new Predator(coordinates,1, 3, 4);
         field.field.put(coordinates, predator);
     }
 
     public void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Herbivore herbivore = new Herbivore(coordinates,1, 5);
+        Herbivore herbivore = new Herbivore(coordinates,2, 5);
         field.field.put(coordinates, herbivore);
     }
 

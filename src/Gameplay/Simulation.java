@@ -35,12 +35,9 @@ public class Simulation {
         renderer.showMap(field);
 
         if (!thereIsGrass(field)) {
-            int count=0;
             for (int i = numberOfGrass()-1; i <= numberOfHarbivore(); i++) {
                 initActions.plantGrass(field);
-                count++;
             }
-            System.out.printf("Было посажено %s травы",count);
             System.out.println();
         }
     }
@@ -123,8 +120,5 @@ public class Simulation {
         }
         return false;
     }
-
-
-    Actions[] gameLoop;
 
 }

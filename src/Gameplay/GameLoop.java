@@ -1,15 +1,42 @@
 package Gameplay;
 
+import Entity.Entity;
 import Map.Field;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameLoop {
     static {
         System.out.println("""
                 Приветсвую тебя ты в игре Симуляция!
-                Задай размеры поля для симуляции.
-                Колличество строк и столбцов должно находиться в пределах от 5 до 50 включительно. 
+                   
+                Здесь волки и зайцы борются за выживание до тех пор пока в живых не останется только один  вид существ.
+
+                Немного предисловия.
+                                
+                Существа каждый ход теряют и/или восполняют здоровье:
+                Заяц теряет 1HP если не ест траву и/или 3HP если поддвергся нападению со стороны волка;
+                Зайц восполняет 3HP если ест траву;
+                Волк теряет 1HP если не атакует зайца;
+                Волк восполняет 3HP если атакует зайца.
+                                
+                Существа имеют  разные базовые данные :
+                Заяц = здоровье 5HP, скорость 2е клетки;
+                Волк = здоровье 3HP, атака 3, скорость 1 клеткаю.
+                
+                В процессе игры трава для зайцев будет восполняться.
+                                
+                Если существо продержалось 5 хода и не умерло то у него появляется потомство. 
+                ВНИМАНИЕ стоит ограничение на рождаемость новых существ. 
+                Заполненность карты не более чем на половину.
+                
+                
+                ------------------------------------------------------
+                ИТАК НАЧНЕМ!!!
+                                
+                Задай размеры поля для симуляции:
+                P.S. Колличество строк и столбцов должно находиться в пределах от 5 до 50 включительно.
                 """);
     }
 
@@ -31,25 +58,42 @@ public class GameLoop {
 
         simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
         System.out.println("""
-                Мир создан с указанными размерами.
-                Нажмите 1 что бы сделать ход всеми существами.
-                Нажмите 2 что бы запустить режим постоянного взаимодействия.
-                
-                P.S. 
-                1. Симуляция будет выполнять до тех пор пока в живых  не останутся один вид существ (волки или зайцы).
-                2. Волк и заяц могут терять и/или восполнять здоровье в процессе хода:
-                   2.1 Заяй теряет 1HP если не ест траву и/или 3HP если поддвергся нападению со стороны волков (На старте заяц имеет 5HP);
-                   2.1.1 Зайц восполняет 3HP если ест траву.
-                   2.2 Волк теряет 1HP если не атакует зайца.
-                   2.2.1 Волк восполняет 3HP если атакует зайца
-                 
+                Мир создан!
                 """);
         simulation.renderer.showMap(simulation.field);
 
+
+
+
+        INNER:
+        while (true) {
+            System.out.println("""
+                    Нажмите 1 что бы продолжить.
+                    Нажмите 2 что бы изменить расположение объектов по умолчанию.
+                    """);
+            String input = checkStartInput0(scanner);
+            switch (input) {
+                case "2":
+                    simulation.field.field = new HashMap<>();
+                    simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
+                    System.out.println("""
+                            Мир создан!
+                            """);
+                    simulation.renderer.showMap(simulation.field);
+                    break;
+                case "1":
+                    break INNER;
+            }
+        }
+
+        System.out.println("""
+                Нажмите 1 что бы сделать ход всеми существами.
+                Нажмите 2 что бы запустить режим постоянного взаимодействия.
+                """);
         try {
             while (true) {
 
-                String input = checkStartInput(scanner);
+               String input = checkStartInput(scanner);
 
                 switch (input) {
                     case "1":
@@ -57,10 +101,13 @@ public class GameLoop {
                         break;
                     case "2":
                         simulation.startSimulation();
+                    case "3":
+
+                        simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
                 }
             }
         } catch (RuntimeException runtimeException) {
-            if (simulation.thereIsPredator(simulation.field)){
+            if (simulation.thereIsPredator(simulation.field)) {
                 System.out.println("""
                         -------------Конец---------------
                         Волки победили!!!
@@ -77,6 +124,18 @@ public class GameLoop {
         }
 
         scanner.close();
+    }
+
+    private String checkStartInput0(Scanner scanner) {
+        String input = scanner.next();
+        while (!("12".indexOf(input) >= 0 && input.length() == 1)) {
+            System.out.println("""
+                    Неверный ввод
+                    Нужно ввести цифру от 1 до 2.
+                    """);
+            input = scanner.next();
+        }
+        return input;
     }
 
     private int input(Scanner scanner) {
@@ -111,10 +170,10 @@ public class GameLoop {
 
     private String checkStartInput(Scanner scanner) {
         String input = scanner.next();
-        while (!("12".indexOf(input) >= 0 && input.length() == 1)) {
+        while (!("132".indexOf(input) >= 0 && input.length() == 1)) {
             System.out.println("""
                     Неверный ввод
-                    Нужно ввести цифру 1 или 2.
+                    Нужно ввести цифру от 1 до 3.
                     """);
             input = scanner.next();
         }

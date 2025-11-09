@@ -19,9 +19,9 @@ public class TurnActions extends Actions {
                 if (((Creature) entity).getHp() <= 0) {
                     continue;
                 }
-                if (((Creature) entity).getMoveConter() >= 4) {
+                if (((Creature) entity).getMoveConter()%5==0 && ((Creature) entity).getMoveConter()!=0) {
                     createCreature(entity, field);
-                    System.out.println("появилось потомство " + ((entity instanceof Predator) ? "у волков" : "у зайцев"));
+//                    System.out.println("Ура родлся еще "+((entity instanceof Predator)?"волк":"заяц"));
                 }
 
                 ((Creature) entity).makeMove(field);
