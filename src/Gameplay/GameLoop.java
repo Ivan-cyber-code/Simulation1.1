@@ -1,6 +1,5 @@
 package Gameplay;
 
-import Entity.Entity;
 import Map.Field;
 
 import java.util.HashMap;
@@ -10,23 +9,23 @@ public class GameLoop {
     static {
         System.out.println("""
                 Приветсвую тебя ты в игре Симуляция!
-                   
+                
                 Здесь волки и зайцы борются за выживание до тех пор пока в живых не останется только один  вид существ.
 
                 Немного предисловия.
-                                
+                
                 Существа каждый ход теряют и/или восполняют здоровье:
                 Заяц теряет 1HP если не ест траву и/или 3HP если поддвергся нападению со стороны волка;
                 Зайц восполняет 3HP если ест траву;
                 Волк теряет 1HP если не атакует зайца;
                 Волк восполняет 3HP если атакует зайца.
-                                
+                
                 Существа имеют  разные базовые данные :
                 Заяц = здоровье 5HP, скорость 2е клетки;
                 Волк = здоровье 3HP, атака 3, скорость 1 клеткаю.
                 
                 В процессе игры трава для зайцев будет восполняться.
-                                
+                
                 Если существо продержалось 5 хода и не умерло то у него появляется потомство. 
                 ВНИМАНИЕ стоит ограничение на рождаемость новых существ. 
                 Заполненность карты не более чем на половину.
@@ -128,7 +127,7 @@ public class GameLoop {
 
     private String checkStartInput0(Scanner scanner) {
         String input = scanner.next();
-        while (!("12".indexOf(input) >= 0 && input.length() == 1)) {
+        while (!("12".contains(input) && input.length() == 1)) {
             System.out.println("""
                     Неверный ввод
                     Нужно ввести цифру от 1 до 2.
@@ -153,10 +152,7 @@ public class GameLoop {
     }
 
     private boolean checkInputAcceptable(String input) {
-        if (checkInputNumber(input) && Integer.parseInt(input) <= 50 && Integer.parseInt(input) >= 5) {
-            return true;
-        }
-        return false;
+        return checkInputNumber(input) && Integer.parseInt(input) <= 50 && Integer.parseInt(input) >= 5;
     }
 
     private boolean checkInputNumber(String input) {
@@ -170,7 +166,7 @@ public class GameLoop {
 
     private String checkStartInput(Scanner scanner) {
         String input = scanner.next();
-        while (!("132".indexOf(input) >= 0 && input.length() == 1)) {
+        while (!("132".contains(input) && input.length() == 1)) {
             System.out.println("""
                     Неверный ввод
                     Нужно ввести цифру от 1 до 3.

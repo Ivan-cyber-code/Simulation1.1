@@ -115,10 +115,7 @@ public class Simulation {
                 countGrass++;
             }
         }
-        if (countGrass>=countHerbivore){
-            return true;
-        }
-        return false;
+        return countGrass >= countHerbivore;
     }
 
 }
