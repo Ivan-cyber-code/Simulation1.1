@@ -7,10 +7,6 @@ import java.util.Scanner;
 
 public class Simulation {
 
-    public void setPaused() {
-        isPaused = !isPaused;
-    }
-
     private boolean isPaused = false;
     Field field;
     int moveCounter;
