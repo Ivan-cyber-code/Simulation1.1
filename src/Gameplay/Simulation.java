@@ -3,13 +3,21 @@ package Gameplay;
 import Entity.*;
 import Map.*;
 
+import java.util.Scanner;
+
 public class Simulation {
 
+    public void setPaused() {
+        isPaused = !isPaused;
+    }
+
+    private boolean isPaused = false;
     Field field;
     int moveCounter;
     Renderer renderer = new Renderer();
     InitActions initActions = new InitActions();
     TurnActions turnActions = new TurnActions();
+    final Scanner SCANNER = new Scanner(System.in);
 
 
     public Simulation(Field field) {
@@ -35,7 +43,7 @@ public class Simulation {
         renderer.showMap(field);
 
         if (!thereIsGrass(field)) {
-            for (int i = numberOfGrass()-1; i <= numberOfHarbivore(); i++) {
+            for (int i = numberOfGrass() - 1; i <= numberOfHarbivore(); i++) {
                 initActions.plantGrass(field);
             }
             System.out.println();
@@ -43,9 +51,9 @@ public class Simulation {
     }
 
     private int numberOfPredator() {
-        int count=0;
-        for (Entity entity : field.field.values()){
-            if (entity instanceof Predator){
+        int count = 0;
+        for (Entity entity : field.field.values()) {
+            if (entity instanceof Predator) {
                 count++;
             }
         }
@@ -53,35 +61,92 @@ public class Simulation {
     }
 
     private int numberOfHarbivore() {
-        int count=0;
-        for (Entity entity : field.field.values()){
-            if (entity instanceof Herbivore){
+        int count = 0;
+        for (Entity entity : field.field.values()) {
+            if (entity instanceof Herbivore) {
                 count++;
             }
         }
         return count;
     }
 
+    private synchronized void pauseGame() {
 
-    public void startSimulation() {
-        while (true) {
+        isPaused = true;
 
-            nextTurn();
-            try {
-                Thread.sleep(1000); // Пауза 2 секунды
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+    }
 
-            if (!thereIsHerbivore(field) || !thereIsPredator(field)) {
-                throw new RuntimeException();
-            }
+    private synchronized void resumeGame() {
+        isPaused = false;
+        synchronized (this) {
+            notifyAll();
         }
     }
 
+    private void handleUserInput() {
+
+        while (true) {
+            String input = checkInput();
+            switch (input) {
+                case "3":
+                    pauseGame();
+                    break;
+                case "4":
+                    resumeGame();
+            }
+        }
+
+    }
+
+    private String checkInput() {
+        String input = SCANNER.next();
+        while (!("34".contains(input) && input.length() == 1)) {
+            System.out.println("""
+                    Неверный ввод
+                    Нужно ввести цифру 3 или 4.
+                    """);
+            input = SCANNER.next();
+        }
+        return input;
+    }
+
+    public void startSimulation() {
+
+        new Thread(this::handleUserInput).start();
+
+
+        while (true) {
+
+            if (!isPaused) {
+                System.out.println("Для постановки на паузу нажмите 3");
+
+                nextTurn();
+                try {
+                    Thread.sleep(1000); // Пауза 2 секунды
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
+                if (!thereIsHerbivore(field) || !thereIsPredator(field)) {
+                    throw new RuntimeException();
+                }
+            } else {
+                synchronized (this) {
+                    System.out.println("Симуляция находится на паузе, нажмите 4 что бы продолжить");
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    }
+
     public boolean thereIsPredator(Field field) {
-        for (Entity entity:field.field.values()){
-            if (entity instanceof Predator){
+        for (Entity entity : field.field.values()) {
+            if (entity instanceof Predator) {
                 return true;
             }
         }
@@ -89,9 +154,9 @@ public class Simulation {
     }
 
     private int numberOfGrass() {
-        int count=0;
-        for (Entity entity : field.field.values()){
-            if (entity instanceof Grass){
+        int count = 0;
+        for (Entity entity : field.field.values()) {
+            if (entity instanceof Grass) {
                 count++;
             }
         }
