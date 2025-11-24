@@ -1,4 +1,4 @@
-package Map;
+package map;
 
 public class CellColor {
 //    static String ANSI_RED_BACKGROUND = "\u001B[41m";

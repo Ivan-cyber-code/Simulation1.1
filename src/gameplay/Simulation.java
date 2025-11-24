@@ -1,7 +1,7 @@
-package Gameplay;
+package gameplay;
 
-import Entity.*;
-import Map.*;
+import entity.*;
+import map.*;
 
 import java.util.Scanner;
 

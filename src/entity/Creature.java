@@ -1,9 +1,9 @@
-package Entity;
+package entity;
 
 //import java.util.Map;
 
-import Map.Field;
-import Map.Node;
+import map.Field;
+import map.Node;
 
 import java.util.List;
 

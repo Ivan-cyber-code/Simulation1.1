@@ -1,7 +1,7 @@
-package Map;
+package map;
 
 
-import Entity.*;
+import entity.*;
 
 public class Renderer {
 
@@ -30,7 +30,7 @@ public class Renderer {
             for (int columns = 0; columns < field.columns; columns++) {
                 String cellColor = ((lines + columns) % 2 == 0) ? CellColor.BACKGROUND_WHITE : CellColor.BACKGROUND_BLUE;
                 if (field.field.containsKey(new Coordinates(lines, columns))) {
-                    System.out.print(cellColor + toKnowSprites(new Coordinates(lines, columns), field)+CellColor.BACKGROUND_RESET);
+                    System.out.print(cellColor + toKnowSprites(new Coordinates(lines, columns), field) + CellColor.BACKGROUND_RESET);
                 } else {
                     System.out.print(cellColor + "   "+CellColor.BACKGROUND_RESET);
                 }

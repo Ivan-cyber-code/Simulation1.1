@@ -1,4 +1,4 @@
-package Gameplay;
+package gameplay;
 
 abstract public class Actions {
 }

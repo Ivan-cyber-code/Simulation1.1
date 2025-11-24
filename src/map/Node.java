@@ -1,10 +1,10 @@
-package Map;
+package map;
 
 
 
 import java.util.*;
 
-import Entity.*;
+import entity.*;
 
 
 public class Node {

@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 public class Rock extends Entity{
     public Rock(Coordinates coordinates) {

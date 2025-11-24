@@ -1,6 +1,6 @@
-package Map;
+package map;
 
-import Entity.*;
+import entity.*;
 
 import java.util.HashMap;
 

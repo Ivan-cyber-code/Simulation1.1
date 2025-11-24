@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 public abstract class Entity {
     Entity(Coordinates coordinates){
