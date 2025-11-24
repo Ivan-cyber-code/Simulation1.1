@@ -38,7 +38,7 @@ public class Simulation {
 
         renderer.showMap(field);
 
-        if (!thereIsGrass(field)) {
+        if (!isGrass(field)) {
             for (int i = numberOfGrass() - 1; i <= numberOfHarbivore(); i++) {
                 initActions.plantGrass(field);
             }
@@ -123,7 +123,7 @@ public class Simulation {
                     Thread.currentThread().interrupt();
                 }
 
-                if (!thereIsHerbivore(field) || !thereIsPredator(field)) {
+                if (!isHerbivore(field) || !IsPredator(field)) {
                     throw new RuntimeException();
                 }
             } else {
@@ -140,7 +140,7 @@ public class Simulation {
 
     }
 
-    public boolean thereIsPredator(Field field) {
+    public boolean IsPredator(Field field) {
         for (Entity entity : field.field.values()) {
             if (entity instanceof Predator) {
                 return true;
@@ -159,7 +159,7 @@ public class Simulation {
         return count;
     }
 
-    public boolean thereIsHerbivore(Field field) {
+    public boolean isHerbivore(Field field) {
         for (Entity entity : field.field.values()) {
             if (entity instanceof Herbivore) {
                 return true;
@@ -168,7 +168,7 @@ public class Simulation {
         return false;
     }
 
-    private boolean thereIsGrass(Field field) {
+    private boolean isGrass(Field field) {
         int countGrass = -1;
         int countHerbivore = numberOfHarbivore();
         for (Entity entity : field.field.values()) {

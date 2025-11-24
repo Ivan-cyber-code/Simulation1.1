@@ -112,7 +112,7 @@ public class GameLoop {
                 }
             }
         } catch (RuntimeException runtimeException) {
-            if (simulation.thereIsPredator(simulation.field)) {
+            if (simulation.IsPredator(simulation.field)) {
                 System.out.println("""
                         -------------Конец---------------
                         Волки победили!!!
@@ -145,11 +145,11 @@ public class GameLoop {
 
     private int input(Scanner scanner) {
         String input = scanner.next();
-        while (!checkInputNumber(input) || !checkInputAcceptable(input)) {
-            if (!checkInputNumber(input)) {
+        while (!isNumber(input) || !isValidStartInput(input)) {
+            if (!isNumber(input)) {
                 System.out.println("Неверный формат, нужно ввести число целое число.");
             }
-            if (!checkInputAcceptable(input)) {
+            if (!isValidStartInput(input)) {
                 System.out.println("Это число, но оно не входит в диапозн от 0 до 50.");
             }
             input = scanner.next();
@@ -157,11 +157,11 @@ public class GameLoop {
         return Integer.parseInt(input);
     }
 
-    private boolean checkInputAcceptable(String input) {
-        return checkInputNumber(input) && Integer.parseInt(input) <= 50 && Integer.parseInt(input) >= 5;
+    private boolean isValidStartInput(String input) {
+        return isNumber(input) && Integer.parseInt(input) <= 50 && Integer.parseInt(input) >= 5;
     }
 
-    private boolean checkInputNumber(String input) {
+    private boolean isNumber(String input) {
         for (char a : input.toCharArray()) {
             if (!Character.isDigit(a)) {
                 return false;

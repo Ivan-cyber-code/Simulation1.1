@@ -20,7 +20,7 @@ public class Node {
     public Node() {
     }
 
-    private boolean thisNodeIsGoal(Node current, Node goal) {
+    private boolean isGoal(Node current, Node goal) {
         if (current.coordinates.x == goal.coordinates.x && current.coordinates.y == goal.coordinates.y) {
             return true;
         } else {
@@ -41,11 +41,11 @@ public class Node {
         while (!queue.isEmpty()) {
             Node current = queue.poll();
 
-            if (thisNodeIsGoal(current, goal)) {
+            if (isGoal(current, goal)) {
                 return constructPath(current);
             }
 
-            boolean flag = nextNodeGoal(current, goal);
+            boolean flag = isNextNodeGoal(current, goal);
 
             for (int[] direction : new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}}) {
                 int newX = current.coordinates.x + direction[0];
@@ -53,7 +53,7 @@ public class Node {
 
                 if (flag) {
                     Node next = new Node(new Coordinates(newX,newY), current);
-                    if (thisNodeIsGoal(next, goal)) {
+                    if (isGoal(next, goal)) {
                         return constructPath(next);
                     }
                 } else {
@@ -68,11 +68,11 @@ public class Node {
         return List.of();
     }
 
-    private boolean nextNodeGoal(Node current, Node goal) {
+    private boolean isNextNodeGoal(Node current, Node goal) {
         for (int[] direction : new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}}) {
             int newX = current.coordinates.x + direction[0];
             int newY = current.coordinates.y + direction[1];
-            boolean flag = thisNodeIsGoal(new Node(new Coordinates(newX, newY), current), goal);
+            boolean flag = isGoal(new Node(new Coordinates(newX, newY), current), goal);
             if (flag) {
                 return flag;
             }
