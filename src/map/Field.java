@@ -13,5 +13,5 @@ public class Field {
     public final int lines;
     public final int columns;
 
-    public HashMap<Coordinates, Entity> field = new HashMap<>();
+    public HashMap<Coordinates, Entity> entities = new HashMap<>();
 }

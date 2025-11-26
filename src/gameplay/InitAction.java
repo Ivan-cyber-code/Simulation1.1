@@ -5,7 +5,7 @@ import map.*;
 
 import java.util.Random;
 
-public class InitActions extends Actions {
+public class InitAction extends Action {
 
     int coefficientEntity;
 
@@ -26,36 +26,36 @@ public class InitActions extends Actions {
     private void createTree(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Tree tree = new Tree(coordinates);
-        field.field.put(coordinates, tree);
+        field.entities.put(coordinates, tree);
     }
 
     private void createRock(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Rock rock = new Rock(coordinates);
-        field.field.put(coordinates, rock);
+        field.entities.put(coordinates, rock);
     }
 
     public void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Predator predator = new Predator(coordinates,1, 3, 4);
-        field.field.put(coordinates, predator);
+        field.entities.put(coordinates, predator);
     }
 
     public void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Herbivore herbivore = new Herbivore(coordinates,2, 5);
-        field.field.put(coordinates, herbivore);
+        field.entities.put(coordinates, herbivore);
     }
 
     public void plantGrass(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Grass grass = new Grass(coordinates);
-        field.field.put(coordinates, grass);
+        field.entities.put(coordinates, grass);
     }
 
     private Coordinates createNewUniqueCoordinates(Field field) {
         Coordinates coordinates = creatRandomCoordinates(field);
-        while (field.field.containsKey(coordinates)) {
+        while (field.entities.containsKey(coordinates)) {
             coordinates = creatRandomCoordinates(field);
         }
         return coordinates;

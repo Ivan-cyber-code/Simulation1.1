@@ -24,12 +24,12 @@ public class Predator extends Creature {
 
         Herbivore herbivore = getHerbifore(field);
 
-        List<Node> path = findAWaytothegoal(coordinate, herbivore.coordinate, field);
+        List<Node> path = findWay(coordinate, herbivore.coordinate, field);
 
         setMoveConter();
 
         if (path.size() - 1 > getSpeed()) {
-            moveTheTarget(field, path);
+            move(field, path);
         } else {
             attack(field, herbivore);
         }
@@ -40,18 +40,18 @@ public class Predator extends Creature {
 //    }
 
     private void attack(Field field, Herbivore herbivore) {
-        herbivore.setHp(-1 * getAttsckPower());
-        this.setHp(3);
-        if (herbivore.getHp() <= 0) {
-            field.field.remove(herbivore.coordinate);
-            field.field.remove(coordinate);
+        herbivore.setHealth(-1 * getAttsckPower());
+        this.setHealth(3);
+        if (herbivore.getHealth() <= 0) {
+            field.entities.remove(herbivore.coordinate);
+            field.entities.remove(coordinate);
             coordinate = herbivore.coordinate;
-            field.field.put(coordinate, this);
+            field.entities.put(coordinate, this);
         }
     }
 
     private Herbivore getHerbifore(Field field) {
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Herbivore) {
                 return ((Herbivore) entity);
             }

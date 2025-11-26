@@ -8,52 +8,52 @@ import map.Node;
 import java.util.List;
 
 public abstract class Creature extends Entity {
-    Creature(Coordinates myCoordinates, int speed, int hp) {
-        super(myCoordinates);
+    Creature(Coordinates coordinates, int speed, int health) {
+        super(coordinates);
         this.speed = speed;
-        this.hp = hp;
+        this.health = health;
     }
 
-    private int moveConter;
+    private int ConterMoves;
 
-    public int getMoveConter() {
-        return moveConter;
+    public int getConterMoves() {
+        return ConterMoves;
     }
 
     public void setMoveConter() {
-        this.moveConter = ++moveConter;
+        this.ConterMoves = ++ConterMoves;
     }
 
-    private int speed, hp;
+    private int speed, health;
 
     public int getSpeed() {
         return speed;
     }
 
-    public void setHp(int hp) {
-        this.hp += hp;
+    public void setHealth(int health) {
+        this.health += health;
     }
 
-    public int getHp() {
-        return hp;
+    public int getHealth() {
+        return health;
     }
 
-    protected void moveTheTarget(Field field, List<Node> path){
-        setHp(-1);
-        field.field.remove(coordinate);
+    protected void move(Field field, List<Node> path){
+        setHealth(-1);
+        field.entities.remove(coordinate);
         coordinate=path.get(getSpeed()).coordinates;
-        field.field.put(coordinate,this);
-        if (getHp() <= 0) {
-            field.field.remove(coordinate);
+        field.entities.put(coordinate,this);
+        if (getHealth() <= 0) {
+            field.entities.remove(coordinate);
         }
     }
 
-    protected List<Node> findAWaytothegoal(Coordinates current, Coordinates goal, Field field) {
+    protected List<Node> findWay(Coordinates current, Coordinates goal, Field field) {
 
         Node currentNode = new Node(current, null);
         Node goalNode = new Node(goal, null);
 
-        return new Node().bfs(currentNode, goalNode, field);
+        return new Node().showWay(currentNode, goalNode, field);
     }
 
     public abstract void makeMove(Field field);

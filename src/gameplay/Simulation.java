@@ -11,8 +11,8 @@ public class Simulation {
     Field field;
     int moveCounter;
     Renderer renderer = new Renderer();
-    InitActions initActions = new InitActions();
-    TurnActions turnActions = new TurnActions();
+    InitAction initActions = new InitAction();
+    TurnAction turnActions = new TurnAction();
     final Scanner SCANNER = new Scanner(System.in);
 
 
@@ -48,7 +48,7 @@ public class Simulation {
 
     private int numberOfPredator() {
         int count = 0;
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Predator) {
                 count++;
             }
@@ -58,7 +58,7 @@ public class Simulation {
 
     private int numberOfHarbivore() {
         int count = 0;
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Herbivore) {
                 count++;
             }
@@ -141,7 +141,7 @@ public class Simulation {
     }
 
     public boolean IsPredator(Field field) {
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Predator) {
                 return true;
             }
@@ -151,7 +151,7 @@ public class Simulation {
 
     private int numberOfGrass() {
         int count = 0;
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Grass) {
                 count++;
             }
@@ -160,7 +160,7 @@ public class Simulation {
     }
 
     public boolean isHerbivore(Field field) {
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Herbivore) {
                 return true;
             }
@@ -171,7 +171,7 @@ public class Simulation {
     private boolean isGrass(Field field) {
         int countGrass = -1;
         int countHerbivore = numberOfHarbivore();
-        for (Entity entity : field.field.values()) {
+        for (Entity entity : field.entities.values()) {
             if (entity instanceof Grass) {
                 countGrass++;
             }

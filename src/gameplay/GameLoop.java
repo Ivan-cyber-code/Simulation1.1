@@ -76,10 +76,10 @@ public class GameLoop {
                     Нажмите 1 что бы продолжить.
                     Нажмите 2 что бы изменить расположение объектов по умолчанию.
                     """);
-            String input = checkStartInput0(scanner);
+            String input = enteringMapConfiguration(scanner);
             switch (input) {
                 case "2":
-                    simulation.field.field = new HashMap<>();
+                    simulation.field.entities = new HashMap<>();
                     simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
                     System.out.println("""
                             Мир создан!
@@ -98,7 +98,7 @@ public class GameLoop {
         try {
             while (true) {
 
-               String input = checkStartInput(scanner);
+               String input = makeMove(scanner);
 
                 switch (input) {
                     case "1":
@@ -131,7 +131,7 @@ public class GameLoop {
         scanner.close();
     }
 
-    private String checkStartInput0(Scanner scanner) {
+    private String enteringMapConfiguration(Scanner scanner) {
         String input = scanner.next();
         while (!("12".contains(input) && input.length() == 1)) {
             System.out.println("""
@@ -170,7 +170,7 @@ public class GameLoop {
         return true;
     }
 
-    private String checkStartInput(Scanner scanner) {
+    private String makeMove(Scanner scanner) {
         String input = scanner.next();
         while (!("132".contains(input) && input.length() == 1)) {
             System.out.println("""
