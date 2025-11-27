@@ -12,16 +12,15 @@ public class TurnAction extends Action {
     public void makeAMoveWithAllCreatures(Field field) {
 
 
-        List<Entity> copyOfTheField = new ArrayList<>(field.entities.values());
+        List<Entity> copyField = new ArrayList<>(field.entities.values());
 
-        for (Entity entity : copyOfTheField) {
+        for (Entity entity : copyField) {
             if (entity instanceof Creature) {
                 if (((Creature) entity).getHealth() <= 0) {
                     continue;
                 }
                 if (((Creature) entity).getConterMoves() % 5 == 0 && ((Creature) entity).getConterMoves() != 0) {
                     createCreature(entity, field);
-//                    System.out.println("Ура родлся еще "+((entity instanceof Predator)?"волк":"заяц"));
                 }
 
                 ((Creature) entity).makeMove(field);
@@ -30,7 +29,7 @@ public class TurnAction extends Action {
     }
 
     private void createCreature(Entity entity, Field field) {
-        if(field.entities.size() <= (field.lines * field.columns) / 2){
+        if (field.entities.size() <= (field.lines * field.columns) / 2) {
             if (entity instanceof Herbivore) {
                 initActions.createHerbivore(field);
             } else {

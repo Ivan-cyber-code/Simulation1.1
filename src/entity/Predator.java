@@ -22,7 +22,7 @@ public class Predator extends Creature {
     @Override
     public void makeMove(Field field) {
 
-        Herbivore herbivore = getHerbifore(field);
+        Herbivore herbivore = findHerbifore(field);
 
         List<Node> path = findWay(coordinate, herbivore.coordinate, field);
 
@@ -50,7 +50,7 @@ public class Predator extends Creature {
         }
     }
 
-    private Herbivore getHerbifore(Field field) {
+    private Herbivore findHerbifore(Field field) {
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Herbivore) {
                 return ((Herbivore) entity);

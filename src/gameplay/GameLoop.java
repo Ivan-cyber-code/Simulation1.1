@@ -9,9 +9,9 @@ public class GameLoop {
     static {
         System.out.println("""
                 Приветсвую тебя ты в игре Симуляция!
-                
+                                
                 Здесь волки и зайцы борются за выживание до тех пор пока в живых не останется только один  вид существ.
-                
+                                
                 В игре название сущности соответсвуют заглавной букве названия этой сущности на английском языке:
                 Заяц = 'H';
                 Волк = 'W';
@@ -19,24 +19,24 @@ public class GameLoop {
                 Трава = 'G'.
 
                 Немного предисловия.
-                
+                                
                 Существа каждый ход теряют и/или восполняют здоровье:
                 Заяц теряет 1HP если не ест траву и/или 3HP если поддвергся нападению со стороны волка;
                 Зайц восполняет 3HP если ест траву;
                 Волк теряет 1HP если не атакует зайца;
                 Волк восполняет 3HP если атакует зайца.
-                
+                                
                 Существа имеют  разные базовые данные :
                 Заяц = здоровье 5HP, скорость 2е клетки;
                 Волк = здоровье 3HP, атака 3, скорость 1 клеткаю.
-                
+                                
                 В процессе игры трава для зайцев будет восполняться.
-                
+                                
                 Если существо продержалось 5 хода и не умерло то у него появляется потомство. 
                 ВНИМАНИЕ стоит ограничение на рождаемость новых существ. 
                 Заполненность карты не более чем на половину.
-                
-                
+                                
+                                
                 ------------------------------------------------------
                 ИТАК НАЧНЕМ!!!
                                 
@@ -51,23 +51,21 @@ public class GameLoop {
 
     private int createdColumns() {
         System.out.println("Колличество столбцов");
-        return input(scanner);
+        return enter(scanner);
     }
 
     private int createdLine() {
         System.out.println("Колличестов строк:");
-        return input(scanner);
+        return enter(scanner);
     }
 
     public void startGame() {
 
-        simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
+        simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
         System.out.println("""
                 Мир создан!
                 """);
         simulation.renderer.showMap(simulation.field);
-
-
 
 
         INNER:
@@ -76,11 +74,11 @@ public class GameLoop {
                     Нажмите 1 что бы продолжить.
                     Нажмите 2 что бы изменить расположение объектов по умолчанию.
                     """);
-            String input = enteringMapConfiguration(scanner);
+            String input = makeChoice(scanner);
             switch (input) {
                 case "2":
                     simulation.field.entities = new HashMap<>();
-                    simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
+                    simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
                     System.out.println("""
                             Мир создан!
                             """);
@@ -98,7 +96,7 @@ public class GameLoop {
         try {
             while (true) {
 
-               String input = makeMove(scanner);
+                String input = makeChoice(scanner);
 
                 switch (input) {
                     case "1":
@@ -106,12 +104,11 @@ public class GameLoop {
                         break;
                     case "2":
                         simulation.startSimulation();
-                    case "3":
-
-                        simulation.initActions.putEntitiesInTheirDefoultPositions(simulation.field);
                 }
             }
         } catch (RuntimeException runtimeException) {
+
+
             if (simulation.IsPredator(simulation.field)) {
                 System.out.println("""
                         -------------Конец---------------
@@ -125,36 +122,29 @@ public class GameLoop {
                         """);
                 simulation.renderer.showMap(simulation.field);
             }
-
+            simulation.SCANNER.close();
+            scanner.close();
         }
 
         scanner.close();
     }
 
-    private String enteringMapConfiguration(Scanner scanner) {
-        String input = scanner.next();
-        while (!("12".contains(input) && input.length() == 1)) {
-            System.out.println("""
-                    Неверный ввод
-                    Нужно ввести цифру от 1 до 2.
-                    """);
+    private int enter(Scanner scanner) {
+        String input = сheckInput(scanner.next());
+        return Integer.parseInt(input);
+    }
+
+    private String сheckInput(String input) {
+        while (!isNumber(input) || !isValidStartInput(input)) {
+            if (!isNumber(input)) {
+                System.out.println("Неверный формат, нужно ввести натуральное число.");
+            }
+            if (!isValidStartInput(input)) {
+                System.out.println("Это число, но оно не входит в диапозн от 5 до 50.");
+            }
             input = scanner.next();
         }
         return input;
-    }
-
-    private int input(Scanner scanner) {
-        String input = scanner.next();
-        while (!isNumber(input) || !isValidStartInput(input)) {
-            if (!isNumber(input)) {
-                System.out.println("Неверный формат, нужно ввести число целое число.");
-            }
-            if (!isValidStartInput(input)) {
-                System.out.println("Это число, но оно не входит в диапозн от 0 до 50.");
-            }
-            input = scanner.next();
-        }
-        return Integer.parseInt(input);
     }
 
     private boolean isValidStartInput(String input) {
@@ -170,12 +160,12 @@ public class GameLoop {
         return true;
     }
 
-    private String makeMove(Scanner scanner) {
+    private String makeChoice(Scanner scanner) {
         String input = scanner.next();
-        while (!("132".contains(input) && input.length() == 1)) {
+        while (!("12".contains(input) && input.length() == 1)) {
             System.out.println("""
                     Неверный ввод
-                    Нужно ввести цифру от 1 до 3.
+                    Нужно ввести цифру от 1 до 2.
                     """);
             input = scanner.next();
         }

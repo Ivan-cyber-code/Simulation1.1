@@ -7,14 +7,14 @@ import java.util.Random;
 
 public class InitAction extends Action {
 
-    int coefficientEntity;
+    int creatureOccupancyRate;
 
 
-    public void putEntitiesInTheirDefoultPositions(Field field) {
+    public void putEntitiesrDefoultPositions(Field field) {
 
-        coefficientEntity=(field.columns*field.lines)/10;
+        creatureOccupancyRate = (field.columns * field.lines) / 10;
 
-        for (int i = 0; i < coefficientEntity; i++) {
+        for (int i = 0; i < creatureOccupancyRate; i++) {
             plantGrass(field);
             createHerbivore(field);
             createPredator(field);

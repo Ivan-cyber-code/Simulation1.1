@@ -3,11 +3,11 @@ package gameplay;
 import entity.*;
 import map.*;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Simulation {
 
-    private boolean isPaused = false;
+    private boolean Paused = false;
     Field field;
     int moveCounter;
     Renderer renderer = new Renderer();
@@ -33,20 +33,20 @@ public class Simulation {
         System.out.printf("""
                 Всего зайцев: %s;
                 Всехо волков: %s.
-                """, numberOfHarbivore(), numberOfPredator());
+                """, countHarbivore(), countPredator());
         System.out.println();
 
         renderer.showMap(field);
 
         if (!isGrass(field)) {
-            for (int i = numberOfGrass() - 1; i <= numberOfHarbivore(); i++) {
+            for (int i = countGrass() - 1; i <= countHarbivore(); i++) {
                 initActions.plantGrass(field);
             }
             System.out.println();
         }
     }
 
-    private int numberOfPredator() {
+    private int countPredator() {
         int count = 0;
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Predator) {
@@ -56,7 +56,7 @@ public class Simulation {
         return count;
     }
 
-    private int numberOfHarbivore() {
+    private int countHarbivore() {
         int count = 0;
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Herbivore) {
@@ -67,35 +67,34 @@ public class Simulation {
     }
 
     private synchronized void pauseGame() {
-
-        isPaused = true;
-
+        Paused = true;
     }
 
     private synchronized void resumeGame() {
-        isPaused = false;
+        Paused = false;
         synchronized (this) {
             notifyAll();
         }
     }
 
-    private void handleUserInput() {
-
-        while (true) {
-            String input = checkInput();
-            switch (input) {
-                case "3":
-                    pauseGame();
-                    break;
-                case "4":
-                    resumeGame();
+    private void controlSimulation() {
+        try {
+            while (true) {
+                String input = checkInput(SCANNER.next());
+                switch (input) {
+                    case "3":
+                        pauseGame();
+                        break;
+                    case "4":
+                        resumeGame();
+                }
             }
+        } catch (NoSuchElementException e){
+            e.printStackTrace();
         }
-
     }
 
-    private String checkInput() {
-        String input = SCANNER.next();
+    private String checkInput(String input) {
         while (!("34".contains(input) && input.length() == 1)) {
             System.out.println("""
                     Неверный ввод
@@ -108,12 +107,13 @@ public class Simulation {
 
     public void startSimulation() {
 
-        new Thread(this::handleUserInput).start();
+        Thread thread = new Thread(this::controlSimulation);
+        thread.start();
 
 
         while (true) {
 
-            if (!isPaused) {
+            if (!Paused) {
                 System.out.println("Для постановки на паузу нажмите 3");
 
                 nextTurn();
@@ -132,7 +132,7 @@ public class Simulation {
                     try {
                         wait();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        System.out.println("Конец!!!");;
                     }
                 }
             }
@@ -149,7 +149,7 @@ public class Simulation {
         return false;
     }
 
-    private int numberOfGrass() {
+    private int countGrass() {
         int count = 0;
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Grass) {
@@ -170,7 +170,7 @@ public class Simulation {
 
     private boolean isGrass(Field field) {
         int countGrass = -1;
-        int countHerbivore = numberOfHarbivore();
+        int countHerbivore = countHarbivore();
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Grass) {
                 countGrass++;
