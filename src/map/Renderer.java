@@ -1,26 +1,25 @@
 package map;
 
-
 import entity.*;
 
 public class Renderer {
 
-    private String toKnowSprites(Coordinates coordinates, Field field) {
+    private String getSprite(Coordinates coordinates, Field field) {
         if (field.entities.get(coordinates) instanceof Rock) {
-            return Sprites.rock;
+            return Sprites.ROCK;
         }
         if (field.entities.get(coordinates) instanceof Tree) {
-            return Sprites.tree;
+            return Sprites.TREE;
         }
         if (field.entities.get(coordinates) instanceof Grass) {
-            return Sprites.grass;
+            return Sprites.GRASS;
         }
         if (field.entities.get(coordinates) instanceof Herbivore) {
-            return Sprites.herbivore;
+            return Sprites.HERBIVORE;
         }
 
         if (field.entities.get(coordinates) instanceof Predator) {
-            return Sprites.predator;
+            return Sprites.PREDATOR;
         }
         return null;
     }
@@ -30,7 +29,7 @@ public class Renderer {
             for (int columns = 0; columns < field.columns; columns++) {
                 String cellColor = ((lines + columns) % 2 == 0) ? CellColor.BACKGROUND_WHITE : CellColor.BACKGROUND_BLUE;
                 if (field.entities.containsKey(new Coordinates(lines, columns))) {
-                    System.out.print(cellColor + toKnowSprites(new Coordinates(lines, columns), field) + CellColor.BACKGROUND_RESET);
+                    System.out.print(cellColor + getSprite(new Coordinates(lines, columns), field) + CellColor.BACKGROUND_RESET);
                 } else {
                     System.out.print(cellColor + "   "+CellColor.BACKGROUND_RESET);
                 }

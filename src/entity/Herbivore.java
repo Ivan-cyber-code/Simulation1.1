@@ -45,7 +45,7 @@ public class Herbivore extends Creature {
 
         Grass grass = getGrass(field);
 
-        List<Node> path = findWay(coordinate, grass.coordinate, field);
+        List<Node> path = showPath(coordinate, grass.coordinate, field);
 
         setMoveConter();
 

@@ -24,7 +24,7 @@ public class Predator extends Creature {
 
         Herbivore herbivore = findHerbifore(field);
 
-        List<Node> path = findWay(coordinate, herbivore.coordinate, field);
+        List<Node> path = showPath(coordinate, herbivore.coordinate, field);
 
         setMoveConter();
 

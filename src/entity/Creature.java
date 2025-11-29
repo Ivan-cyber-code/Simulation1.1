@@ -48,12 +48,12 @@ public abstract class Creature extends Entity {
         }
     }
 
-    protected List<Node> findWay(Coordinates current, Coordinates goal, Field field) {
+    protected List<Node> showPath(Coordinates current, Coordinates goal, Field field) {
 
         Node currentNode = new Node(current, null);
         Node goalNode = new Node(goal, null);
 
-        return new Node().showWay(currentNode, goalNode, field);
+        return new Node().findPath(currentNode, goalNode, field);
     }
 
     public abstract void makeMove(Field field);

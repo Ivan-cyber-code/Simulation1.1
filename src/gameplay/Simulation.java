@@ -13,6 +13,7 @@ public class Simulation {
     Renderer renderer = new Renderer();
     InitAction initActions = new InitAction();
     TurnAction turnActions = new TurnAction();
+
     final Scanner SCANNER = new Scanner(System.in);
 
 
@@ -89,8 +90,8 @@ public class Simulation {
                         resumeGame();
                 }
             }
-        } catch (NoSuchElementException e){
-            e.printStackTrace();
+        } catch (RuntimeException e){
+
         }
     }
 
