@@ -26,10 +26,6 @@ public class Herbivore extends Creature {
         return null;
     }
 
-//    private void putACreatureOnTheField(Field field) {
-//        field.field.put(coordinate, this);
-//    }
-
     private void eatGrass(Field field, Entity grass) {
         field.entities.remove(grass.coordinate);
         field.entities.remove(coordinate);

@@ -13,6 +13,8 @@ public class Predator extends Creature {
         this.attsckPower = attsckPower;
     }
 
+    private final int HEAL = 3;
+
     private int attsckPower;
 
     public int getAttsckPower() {
@@ -41,7 +43,7 @@ public class Predator extends Creature {
 
     private void attack(Field field, Herbivore herbivore) {
         herbivore.setHealth(-1 * getAttsckPower());
-        this.setHealth(3);
+        this.setHealth(HEAL);
         if (herbivore.getHealth() <= 0) {
             field.entities.remove(herbivore.coordinate);
             field.entities.remove(coordinate);

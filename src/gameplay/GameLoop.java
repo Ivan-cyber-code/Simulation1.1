@@ -6,43 +6,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameLoop {
-    static {
-        System.out.println("""
-                Приветсвую тебя ты в игре Симуляция!
-                                
-                Здесь волки и зайцы борются за выживание до тех пор пока в живых не останется только один  вид существ.
-                                
-                В игре название сущности соответсвуют заглавной букве названия этой сущности на английском языке:
-                Заяц = 'H';
-                Волк = 'W';
-                Камень = 'R';
-                Трава = 'G'.
 
-                Немного предисловия.
-                                
-                Существа каждый ход теряют и/или восполняют здоровье:
-                Заяц теряет 1HP если не ест траву и/или 3HP если поддвергся нападению со стороны волка;
-                Зайц восполняет 3HP если ест траву;
-                Волк теряет 1HP если не атакует зайца;
-                Волк восполняет 3HP если атакует зайца.
-                                
-                Существа имеют  разные базовые данные :
-                Заяц = здоровье 5HP, скорость 2е клетки;
-                Волк = здоровье 3HP, атака 3, скорость 1 клеткаю.
-                                
-                В процессе игры трава для зайцев будет восполняться.
-                                
-                Если существо продержалось 5 хода и не умерло то у него появляется потомство. 
-                ВНИМАНИЕ стоит ограничение на рождаемость новых существ. 
-                Заполненность карты не более чем на половину.
-                                
-                                
-                ------------------------------------------------------
-                ИТАК НАЧНЕМ!!!
-                                
-                Задай размеры поля для симуляции:
-                P.S. Колличество строк и столбцов должно находиться в пределах от 5 до 50 включительно.
-                """);
+    static {
+        System.out.println(Message.PREFACE);
     }
 
     Scanner scanner = new Scanner(System.in);
@@ -50,21 +16,19 @@ public class GameLoop {
     Simulation simulation = new Simulation(new Field(createdLine(), createdColumns()));
 
     private int createdColumns() {
-        System.out.println("Колличество столбцов");
+        System.out.println(Message.COLUMN_QUERY);
         return enter(scanner);
     }
 
     private int createdLine() {
-        System.out.println("Колличестов строк:");
+        System.out.println(Message.LINE_QUERY);
         return enter(scanner);
     }
 
     public void startGame() {
 
         simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
-        System.out.println("""
-                Мир создан!
-                """);
+        System.out.println(Message.MESSAGE_CREATION_WORLD);
         simulation.renderer.showMap(simulation.field);
 
 
