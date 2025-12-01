@@ -9,12 +9,8 @@ import java.util.List;
 
 public class Herbivore extends Creature {
 
-
-//    Herbivore herbivore = new Herbivore(new Coordinates(0,0), 2, 5);
-
-
-    public Herbivore(Coordinates coordinates, int speed, int hp) {
-        super(coordinates, speed, hp);
+    public Herbivore(Coordinates coordinates, int speed, int health) {
+        super(coordinates, speed, health);
     }
 
     private Grass getGrass(Field field) {

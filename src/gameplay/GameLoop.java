@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public class GameLoop {
 
+    public final static int MAX_LIMIT_FIELD=50;
+    public final static int MIN_LIMIT_FIELD=5;
+
     static {
         System.out.println(Message.PREFACE);
     }
@@ -30,22 +33,15 @@ public class GameLoop {
         simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
         System.out.println(Message.MESSAGE_CREATION_WORLD);
         simulation.renderer.showMap(simulation.field);
-
-
         INNER:
         while (true) {
-            System.out.println("""
-                    Нажмите 1 что бы продолжить.
-                    Нажмите 2 что бы изменить расположение объектов по умолчанию.
-                    """);
+            System.out.println(Message.ASSERTION_POSITION_ENTITIES);
             String input = makeChoice(scanner);
             switch (input) {
                 case "2":
                     simulation.field.entities = new HashMap<>();
                     simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
-                    System.out.println("""
-                            Мир создан!
-                            """);
+                    System.out.println(Message.MESSAGE_CREATION_WORLD);
                     simulation.renderer.showMap(simulation.field);
                     break;
                 case "1":
@@ -53,15 +49,11 @@ public class GameLoop {
             }
         }
 
-        System.out.println("""
-                Нажмите 1 что бы сделать ход всеми существами.
-                Нажмите 2 что бы запустить режим постоянного взаимодействия.
-                """);
+        System.out.println(Message.MAKE_MOVE);
+
         try {
             while (true) {
-
                 String input = makeChoice(scanner);
-
                 switch (input) {
                     case "1":
                         simulation.nextTurn();
@@ -74,16 +66,10 @@ public class GameLoop {
 
 
             if (simulation.IsPredator(simulation.field)) {
-                System.out.println("""
-                        -------------Конец---------------
-                        Волки победили!!!
-                        """);
+                System.out.println(Message.VICTORI_PREDATOR);
                 simulation.renderer.showMap(simulation.field);
             } else {
-                System.out.println("""
-                        -------------Конец---------------
-                        Зайцы победили!!!
-                        """);
+                System.out.println(Message.VICTORI_HERBIFORE);
                 simulation.renderer.showMap(simulation.field);
             }
             simulation.SCANNER.close();
@@ -101,10 +87,10 @@ public class GameLoop {
     private String сheckInput(String input) {
         while (!isNumber(input) || !isValidStartInput(input)) {
             if (!isNumber(input)) {
-                System.out.println("Неверный формат, нужно ввести натуральное число.");
+                System.out.println(Message.INVALID_FORMAT_LIMIT_FIELD);
             }
             if (!isValidStartInput(input)) {
-                System.out.println("Это число, но оно не входит в диапозн от 5 до 50.");
+                System.out.println(Message.INVALID_CONDITION);
             }
             input = scanner.next();
         }
@@ -112,7 +98,7 @@ public class GameLoop {
     }
 
     private boolean isValidStartInput(String input) {
-        return isNumber(input) && Integer.parseInt(input) <= 50 && Integer.parseInt(input) >= 5;
+        return isNumber(input) && Integer.parseInt(input) <= MAX_LIMIT_FIELD && Integer.parseInt(input) >= MIN_LIMIT_FIELD;
     }
 
     private boolean isNumber(String input) {
@@ -124,13 +110,13 @@ public class GameLoop {
         return true;
     }
 
+    public final static String VALID_CHOICE="12";
+    public final static int VALID_SIZE_INPUT=1;
+
     private String makeChoice(Scanner scanner) {
         String input = scanner.next();
-        while (!("12".contains(input) && input.length() == 1)) {
-            System.out.println("""
-                    Неверный ввод
-                    Нужно ввести цифру от 1 до 2.
-                    """);
+        while (!(VALID_CHOICE.contains(input) && input.length() == VALID_SIZE_INPUT)) {
+            System.out.println(Message.INVALID_FORMAT_INPUT);
             input = scanner.next();
         }
         return input;

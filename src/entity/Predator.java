@@ -8,9 +8,9 @@ import map.Node;
 import java.util.List;
 
 public class Predator extends Creature {
-    public Predator(Coordinates coordinates, int speed, int hp, int attsckPower) {
-        super(coordinates, speed, hp);
-        this.attsckPower = attsckPower;
+    public Predator(Coordinates coordinates, int speed, int health, int attackPower) {
+        super(coordinates, speed, health);
+        this.attsckPower = attackPower;
     }
 
     private final int HEAL = 3;

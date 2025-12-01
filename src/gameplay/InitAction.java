@@ -7,12 +7,15 @@ import java.util.Random;
 
 public class InitAction extends Action {
 
-    int creatureOccupancyRate;
+    private int creatureOccupancyRate;
 
+    public int getCreatureOccupancyRate(Field field) {
+        return (field.columns * field.lines) / 10;
+    }
 
     public void putEntitiesrDefoultPositions(Field field) {
 
-        creatureOccupancyRate = (field.columns * field.lines) / 10;
+        creatureOccupancyRate = getCreatureOccupancyRate(field);
 
         for (int i = 0; i < creatureOccupancyRate; i++) {
             plantGrass(field);
@@ -35,15 +38,23 @@ public class InitAction extends Action {
         field.entities.put(coordinates, rock);
     }
 
+    private final static int SPEED_PREDATOR=1;
+    private final static int HEALTH_PREDATOR =3;
+    private final static int ATTACK_POWER=4;
+
     public void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Predator predator = new Predator(coordinates,1, 3, 4);
+        Predator predator = new Predator(coordinates,SPEED_PREDATOR, HEALTH_PREDATOR, ATTACK_POWER);
         field.entities.put(coordinates, predator);
     }
 
+
+    private final static int SPEED_HERBIFORE=2;
+    private final static int HEALTH_HERBIFORE=5;
+
     public void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Herbivore herbivore = new Herbivore(coordinates,2, 5);
+        Herbivore herbivore = new Herbivore(coordinates,SPEED_HERBIFORE, HEALTH_HERBIFORE);
         field.entities.put(coordinates, herbivore);
     }
 
