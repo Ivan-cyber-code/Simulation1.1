@@ -25,7 +25,7 @@ public class Simulation {
         moveCounter++;
 
         System.out.printf("""
-                -----------------ХОД: %s -------------------------------
+                -----------------ХОД: %s -----------------
                 """, moveCounter);
         System.out.println();
 
@@ -78,15 +78,18 @@ public class Simulation {
         }
     }
 
+    private final static String PAUSE_GAME="3";
+    private final static String CONTINUE_GAME="4";
+
     private void controlSimulation() {
         try {
             while (true) {
                 String input = checkInput(SCANNER.next());
                 switch (input) {
-                    case "3":
+                    case PAUSE_GAME:
                         pauseGame();
                         break;
-                    case "4":
+                    case CONTINUE_GAME:
                         resumeGame();
                 }
             }
@@ -95,16 +98,24 @@ public class Simulation {
         }
     }
 
-    private String checkInput(String input) {
-        while (!("34".contains(input) && input.length() == 1)) {
-            System.out.println("""
+    private final static String ACCEPTABLE_NUMBERS="34";
+    private final static int VALID_SIZE_INPUT=1;
+    private final static String INVALID_ACCEPTABLE_NUMBERS =  """
                     Неверный ввод
                     Нужно ввести цифру 3 или 4.
-                    """);
+                    """;
+
+
+    private String checkInput(String input) {
+        while (!(ACCEPTABLE_NUMBERS.contains(input) && input.length() == VALID_SIZE_INPUT)) {
+            System.out.println(INVALID_ACCEPTABLE_NUMBERS);
             input = SCANNER.next();
         }
         return input;
     }
+
+
+
 
     public void startSimulation() {
 
@@ -115,7 +126,7 @@ public class Simulation {
         while (true) {
 
             if (!Paused) {
-                System.out.println("Для постановки на паузу нажмите 3");
+                System.out.println(Message.SETTING_PAUSE);
 
                 nextTurn();
                 try {
@@ -129,7 +140,7 @@ public class Simulation {
                 }
             } else {
                 synchronized (this) {
-                    System.out.println("Симуляция находится на паузе, нажмите 4 что бы продолжить");
+                    System.out.println(Message.CONTINUATION_SIMULATION);
                     try {
                         wait();
                     } catch (InterruptedException e) {

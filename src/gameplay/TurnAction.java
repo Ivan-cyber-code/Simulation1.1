@@ -9,17 +9,22 @@ import java.util.List;
 public class TurnAction extends Action {
     InitAction initActions = new InitAction();
 
+    private final int END_HEALTH = 0;
+    public final static int MOVE_REPRODUCTION = 5;
+    public final static int END_CREATURE = 0;
+
     public void makeAMoveWithAllCreatures(Field field) {
 
 
         List<Entity> copyField = new ArrayList<>(field.entities.values());
 
+
         for (Entity entity : copyField) {
             if (entity instanceof Creature) {
-                if (((Creature) entity).getHealth() <= 0) {
+                if (((Creature) entity).getHealth() <= END_HEALTH) {
                     continue;
                 }
-                if (((Creature) entity).getConterMoves() % 5 == 0 && ((Creature) entity).getConterMoves() != 0) {
+                if (((Creature) entity).getConterMoves() % MOVE_REPRODUCTION == 0 && ((Creature) entity).getConterMoves() != END_CREATURE) {
                     createCreature(entity, field);
                 }
 

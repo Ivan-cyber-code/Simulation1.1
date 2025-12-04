@@ -111,7 +111,7 @@ public class GameLoop {
     }
 
     public final static String VALID_CHOICE="12";
-    public final static int VALID_SIZE_INPUT=1;
+    private final static int VALID_SIZE_INPUT=1;
 
     private String makeChoice(Scanner scanner) {
         String input = scanner.next();

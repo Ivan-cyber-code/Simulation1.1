@@ -32,6 +32,9 @@ public class Node {
         return (lines >= 0 && lines < field.lines && columns >= 0 && columns < field.columns && !field.entities.containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
     }
 
+    private final int[][] SET_MOVES={{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
+
+
     public List<Node> findPath(Node start, Node goal, Field field) {
         Queue<Node> queue = new LinkedList<>();
         boolean[][] visits = new boolean[field.lines][field.columns];
@@ -47,7 +50,8 @@ public class Node {
 
             boolean goalFound = isNextNodeGoal(current, goal);
 
-            for (int[] direction : new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}}) {
+
+            for (int[] direction : SET_MOVES) {
                 int lines = current.coordinates.line + direction[0];
                 int columns = current.coordinates.column + direction[1];
 
@@ -69,10 +73,10 @@ public class Node {
     }
 
     private boolean isNextNodeGoal(Node current, Node goal) {
-        for (int[] direction : new int[][]{{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}}) {
-            int newX = current.coordinates.line + direction[0];
-            int newY = current.coordinates.column + direction[1];
-            boolean flag = isGoal(new Node(new Coordinates(newX, newY), current), goal);
+        for (int[] direction : SET_MOVES) {
+            int newLine = current.coordinates.line + direction[0];
+            int newColumn = current.coordinates.column + direction[1];
+            boolean flag = isGoal(new Node(new Coordinates(newLine, newColumn), current), goal);
             if (flag) {
                 return flag;
             }
