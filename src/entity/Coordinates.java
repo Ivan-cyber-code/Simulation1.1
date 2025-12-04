@@ -3,11 +3,14 @@ package entity;
 import java.util.Objects;
 
 public class Coordinates {
+
+    public final int line;
+    public final int column;
+
     public Coordinates(int line, int column){
         this.line =line;
         this.column =column;
     }
-    public final int line, column;
 
     @Override
     public boolean equals(Object o) {

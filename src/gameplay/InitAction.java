@@ -7,11 +7,14 @@ import java.util.Random;
 
 public class InitAction extends Action {
 
-    private int creatureOccupancyRate;
+    private final static int SPEED_PREDATOR=1;
+    private final static int HEALTH_PREDATOR =3;
+    private final static int ATTACK_POWER=4;
 
-    public int getCreatureOccupancyRate(Field field) {
-        return (field.columns * field.lines) / 10;
-    }
+    private final static int SPEED_HERBIFORE=2;
+    private final static int HEALTH_HERBIFORE=5;
+
+    private int creatureOccupancyRate;
 
     public void putEntitiesrDefoultPositions(Field field) {
 
@@ -26,42 +29,34 @@ public class InitAction extends Action {
         }
     }
 
-    private void createTree(Field field) {
-        Coordinates coordinates = createNewUniqueCoordinates(field);
-        Tree tree = new Tree(coordinates);
-        field.entities.put(coordinates, tree);
-    }
-
-    private void createRock(Field field) {
-        Coordinates coordinates = createNewUniqueCoordinates(field);
-        Rock rock = new Rock(coordinates);
-        field.entities.put(coordinates, rock);
-    }
-
-    private final static int SPEED_PREDATOR=1;
-    private final static int HEALTH_PREDATOR =3;
-    private final static int ATTACK_POWER=4;
-
-    public void createPredator(Field field) {
-        Coordinates coordinates = createNewUniqueCoordinates(field);
-        Predator predator = new Predator(coordinates,SPEED_PREDATOR, HEALTH_PREDATOR, ATTACK_POWER);
-        field.entities.put(coordinates, predator);
-    }
-
-
-    private final static int SPEED_HERBIFORE=2;
-    private final static int HEALTH_HERBIFORE=5;
-
-    public void createHerbivore(Field field) {
-        Coordinates coordinates = createNewUniqueCoordinates(field);
-        Herbivore herbivore = new Herbivore(coordinates,SPEED_HERBIFORE, HEALTH_HERBIFORE);
-        field.entities.put(coordinates, herbivore);
+    public int getCreatureOccupancyRate(Field field) {
+        return (field.columns * field.lines) / 10;
     }
 
     public void plantGrass(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Grass grass = new Grass(coordinates);
         field.entities.put(coordinates, grass);
+    }
+    private void createTree(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Tree tree = new Tree(coordinates);
+        field.entities.put(coordinates, tree);
+    }
+    private void createRock(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Rock rock = new Rock(coordinates);
+        field.entities.put(coordinates, rock);
+    }
+    public void createPredator(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Predator predator = new Predator(coordinates,SPEED_PREDATOR, HEALTH_PREDATOR, ATTACK_POWER);
+        field.entities.put(coordinates, predator);
+    }
+    public void createHerbivore(Field field) {
+        Coordinates coordinates = createNewUniqueCoordinates(field);
+        Herbivore herbivore = new Herbivore(coordinates,SPEED_HERBIFORE, HEALTH_HERBIFORE);
+        field.entities.put(coordinates, herbivore);
     }
 
     private Coordinates createNewUniqueCoordinates(Field field) {
@@ -71,7 +66,6 @@ public class InitAction extends Action {
         }
         return coordinates;
     }
-
     private Coordinates creatRandomCoordinates(Field field) {
         return new Coordinates(new Random().nextInt(field.lines), new Random().nextInt(field.columns));
     }

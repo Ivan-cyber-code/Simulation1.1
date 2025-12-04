@@ -7,26 +7,54 @@ import java.util.Scanner;
 
 public class GameLoop {
 
-    public final static int MAX_LIMIT_FIELD=50;
-    public final static int MIN_LIMIT_FIELD=5;
+    private final static int MAX_LIMIT_FIELD=50;
+    private final static int MIN_LIMIT_FIELD=5;
+    private final static String VALID_CHOICE="12";
+    private final static int VALID_SIZE_INPUT=1;
 
     static {
         System.out.println(Message.PREFACE);
     }
 
-    Scanner scanner = new Scanner(System.in);
-
-    Simulation simulation = new Simulation(new Field(createdLine(), createdColumns()));
+    private final Scanner scanner = new Scanner(System.in);
+    private final Simulation simulation = new Simulation(new Field(createdLine(), createdColumns()));
 
     private int createdColumns() {
         System.out.println(Message.COLUMN_QUERY);
         return enter(scanner);
     }
-
     private int createdLine() {
         System.out.println(Message.LINE_QUERY);
         return enter(scanner);
     }
+    private int enter(Scanner scanner) {
+        String input = сheckInput(scanner.next());
+        return Integer.parseInt(input);
+    }
+    private String сheckInput(String input) {
+        while (!isNumber(input) || !isValidStartInput(input)) {
+            if (!isNumber(input)) {
+                System.out.println(Message.INVALID_FORMAT_LIMIT_FIELD);
+            }
+            if (!isValidStartInput(input)) {
+                System.out.println(Message.INVALID_CONDITION);
+            }
+            input = scanner.next();
+        }
+        return input;
+    }
+    private boolean isValidStartInput(String input) {
+        return isNumber(input) && Integer.parseInt(input) <= MAX_LIMIT_FIELD && Integer.parseInt(input) >= MIN_LIMIT_FIELD;
+    }
+    private boolean isNumber(String input) {
+        for (char a : input.toCharArray()) {
+            if (!Character.isDigit(a)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void startGame() {
 
@@ -79,40 +107,6 @@ public class GameLoop {
         scanner.close();
     }
 
-    private int enter(Scanner scanner) {
-        String input = сheckInput(scanner.next());
-        return Integer.parseInt(input);
-    }
-
-    private String сheckInput(String input) {
-        while (!isNumber(input) || !isValidStartInput(input)) {
-            if (!isNumber(input)) {
-                System.out.println(Message.INVALID_FORMAT_LIMIT_FIELD);
-            }
-            if (!isValidStartInput(input)) {
-                System.out.println(Message.INVALID_CONDITION);
-            }
-            input = scanner.next();
-        }
-        return input;
-    }
-
-    private boolean isValidStartInput(String input) {
-        return isNumber(input) && Integer.parseInt(input) <= MAX_LIMIT_FIELD && Integer.parseInt(input) >= MIN_LIMIT_FIELD;
-    }
-
-    private boolean isNumber(String input) {
-        for (char a : input.toCharArray()) {
-            if (!Character.isDigit(a)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public final static String VALID_CHOICE="12";
-    private final static int VALID_SIZE_INPUT=1;
-
     private String makeChoice(Scanner scanner) {
         String input = scanner.next();
         while (!(VALID_CHOICE.contains(input) && input.length() == VALID_SIZE_INPUT)) {
@@ -121,5 +115,4 @@ public class GameLoop {
         }
         return input;
     }
-
 }

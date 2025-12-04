@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TurnAction extends Action {
-    InitAction initActions = new InitAction();
 
     private final int END_HEALTH = 0;
     public final static int MOVE_REPRODUCTION = 5;
     public final static int END_CREATURE = 0;
+
+    InitAction initActions = new InitAction();
 
     public void makeAMoveWithAllCreatures(Field field) {
 

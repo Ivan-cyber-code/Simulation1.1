@@ -11,29 +11,15 @@ public class Node {
     public Coordinates coordinates;
     private Node parent;
 
+    private final int[][] SET_MOVES={{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
+
+
     public Node(Coordinates coordinates, Node parent) {
         this.coordinates = coordinates;
         this.parent = parent;
     }
-
-
     public Node() {
     }
-
-    private boolean isGoal(Node current, Node goal) {
-        if (current.coordinates.line == goal.coordinates.line && current.coordinates.column == goal.coordinates.column) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isValid(int lines, int columns, boolean[][] visits, Field field, Node goal) {
-        return (lines >= 0 && lines < field.lines && columns >= 0 && columns < field.columns && !field.entities.containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
-    }
-
-    private final int[][] SET_MOVES={{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
-
 
     public List<Node> findPath(Node start, Node goal, Field field) {
         Queue<Node> queue = new LinkedList<>();
@@ -72,6 +58,21 @@ public class Node {
         return List.of();
     }
 
+    private boolean isGoal(Node current, Node goal) {
+        if (current.coordinates.line == goal.coordinates.line && current.coordinates.column == goal.coordinates.column) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private List<Node> extractPath(Node goal) {
+        List<Node> path = new ArrayList<>();
+        for (Node node = goal; node != null; node = node.parent) {
+            path.add(node);
+        }
+        Collections.reverse(path);
+        return path;
+    }
     private boolean isNextNodeGoal(Node current, Node goal) {
         for (int[] direction : SET_MOVES) {
             int newLine = current.coordinates.line + direction[0];
@@ -83,14 +84,11 @@ public class Node {
         }
         return false;
     }
-
-
-    private List<Node> extractPath(Node goal) {
-        List<Node> path = new ArrayList<>();
-        for (Node node = goal; node != null; node = node.parent) {
-            path.add(node);
-        }
-        Collections.reverse(path);
-        return path;
+    private boolean isValid(int lines, int columns, boolean[][] visits, Field field, Node goal) {
+        return (lines >= 0 && lines < field.lines && columns >= 0 && columns < field.columns && !field.entities.containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
     }
+
+
+
+
 }

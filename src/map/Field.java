@@ -3,6 +3,7 @@ package map;
 import entity.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Field {
     public Field(int lines, int columns) {
@@ -13,5 +14,5 @@ public class Field {
     public final int lines;
     public final int columns;
 
-    public HashMap<Coordinates, Entity> entities = new HashMap<>();
+    public Map<Coordinates, Entity> entities = new HashMap<>();
 }

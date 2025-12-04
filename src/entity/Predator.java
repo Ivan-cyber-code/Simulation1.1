@@ -1,24 +1,18 @@
 package entity;
 
-//import java.util.Map;
-
 import map.Field;
 import map.Node;
-
 import java.util.List;
 
 public class Predator extends Creature {
-    public Predator(Coordinates coordinates, int speed, int health, int attackPower) {
-        super(coordinates, speed, health);
-        this.attsckPower = attackPower;
-    }
 
     private final int HEAL = 3;
 
     private int attsckPower;
 
-    public int getAttsckPower() {
-        return attsckPower;
+    public Predator(Coordinates coordinates, int speed, int health, int attackPower) {
+        super(coordinates, speed, health);
+        this.attsckPower = attackPower;
     }
 
     @Override
@@ -37,10 +31,6 @@ public class Predator extends Creature {
         }
     }
 
-//    private void putACreatureOnTheField(Field field) {
-//        field.field.put(coordinate, this);
-//    }
-
     private void attack(Field field, Herbivore herbivore) {
         herbivore.setHealth(-1 * getAttsckPower());
         this.setHealth(HEAL);
@@ -50,6 +40,10 @@ public class Predator extends Creature {
             coordinate = herbivore.coordinate;
             field.entities.put(coordinate, this);
         }
+    }
+
+    public int getAttsckPower() {
+        return attsckPower;
     }
 
     private Herbivore findHerbifore(Field field) {

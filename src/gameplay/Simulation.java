@@ -7,6 +7,16 @@ import java.util.*;
 
 public class Simulation {
 
+    private final static String PAUSE_GAME="3";
+    private final static String CONTINUE_GAME="4";
+    private final static String ACCEPTABLE_NUMBERS="34";
+    private final static int VALID_SIZE_INPUT=1;
+    private final static String INVALID_ACCEPTABLE_NUMBERS =  """
+                    Неверный ввод
+                    Нужно ввести цифру 3 или 4.
+                    """;
+
+
     private boolean Paused = false;
     Field field;
     int moveCounter;
@@ -15,7 +25,6 @@ public class Simulation {
     TurnAction turnActions = new TurnAction();
 
     final Scanner SCANNER = new Scanner(System.in);
-
 
     public Simulation(Field field) {
         this.field = field;
@@ -46,7 +55,6 @@ public class Simulation {
             System.out.println();
         }
     }
-
     private int countPredator() {
         int count = 0;
         for (Entity entity : field.entities.values()) {
@@ -56,7 +64,6 @@ public class Simulation {
         }
         return count;
     }
-
     private int countHarbivore() {
         int count = 0;
         for (Entity entity : field.entities.values()) {
@@ -66,20 +73,6 @@ public class Simulation {
         }
         return count;
     }
-
-    private synchronized void pauseGame() {
-        Paused = true;
-    }
-
-    private synchronized void resumeGame() {
-        Paused = false;
-        synchronized (this) {
-            notifyAll();
-        }
-    }
-
-    private final static String PAUSE_GAME="3";
-    private final static String CONTINUE_GAME="4";
 
     private void controlSimulation() {
         try {
@@ -98,12 +91,16 @@ public class Simulation {
         }
     }
 
-    private final static String ACCEPTABLE_NUMBERS="34";
-    private final static int VALID_SIZE_INPUT=1;
-    private final static String INVALID_ACCEPTABLE_NUMBERS =  """
-                    Неверный ввод
-                    Нужно ввести цифру 3 или 4.
-                    """;
+    private synchronized void pauseGame() {
+        Paused = true;
+    }
+
+    private synchronized void resumeGame() {
+        Paused = false;
+        synchronized (this) {
+            notifyAll();
+        }
+    }
 
 
     private String checkInput(String input) {
@@ -113,9 +110,6 @@ public class Simulation {
         }
         return input;
     }
-
-
-
 
     public void startSimulation() {
 
