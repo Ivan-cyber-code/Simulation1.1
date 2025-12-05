@@ -5,8 +5,8 @@ import entity.*;
 public class Renderer {
 
     public void showMap(Field field) {
-        for (int lines = 0; lines < field.lines; lines++) {
-            for (int columns = 0; columns < field.columns; columns++) {
+        for (int lines = 0; lines < field.getLines(); lines++) {
+            for (int columns = 0; columns < field.getColumns(); columns++) {
                 String cellColor = isCellEven(lines, columns) ? CellColor.BACKGROUND_WHITE : CellColor.BACKGROUND_BLUE;
                 if (field.entities.containsKey(new Coordinates(lines, columns))) {
                     System.out.print(cellColor + getSprite(new Coordinates(lines, columns), field) + CellColor.BACKGROUND_RESET);

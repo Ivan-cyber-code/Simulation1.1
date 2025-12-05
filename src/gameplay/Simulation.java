@@ -26,11 +26,11 @@ public class Simulation {
 
     final Scanner SCANNER = new Scanner(System.in);
 
-    public Simulation(Field field) {
+    Simulation(Field field) {
         this.field = field;
     }
 
-    public void nextTurn() {
+    void nextTurn() {
         moveCounter++;
 
         System.out.printf("""
@@ -111,7 +111,7 @@ public class Simulation {
         return input;
     }
 
-    public void startSimulation() {
+    void startSimulation() {
 
         Thread thread = new Thread(this::controlSimulation);
         thread.start();
@@ -146,7 +146,7 @@ public class Simulation {
 
     }
 
-    public boolean IsPredator(Field field) {
+    boolean IsPredator(Field field) {
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Predator) {
                 return true;
@@ -165,7 +165,7 @@ public class Simulation {
         return count;
     }
 
-    public boolean isHerbivore(Field field) {
+    private boolean isHerbivore(Field field) {
         for (Entity entity : field.entities.values()) {
             if (entity instanceof Herbivore) {
                 return true;

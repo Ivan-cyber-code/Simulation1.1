@@ -16,7 +16,7 @@ public class Herbivore extends Creature {
 
         Grass grass = getGrass(field);
 
-        List<Node> path = showPath(coordinate, grass.coordinate, field);
+        List<Node> path = showPath(getCoordinate(), grass.getCoordinate(), field);
 
         setMoveConter();
 
@@ -37,13 +37,12 @@ public class Herbivore extends Creature {
     }
 
     private void eatGrass(Field field, Entity grass) {
-        field.entities.remove(grass.coordinate);
-        field.entities.remove(coordinate);
-
-        coordinate = grass.coordinate;
+        field.entities.remove(grass.getCoordinate());
+        field.entities.remove(getCoordinate());
+        setCoordinate(grass.getCoordinate());
         System.out.println();
         setHealth(3);
-        field.entities.put(coordinate, this);
+        field.entities.put(getCoordinate(), this);
     }
 }
 

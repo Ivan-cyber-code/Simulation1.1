@@ -30,10 +30,10 @@ public class InitAction extends Action {
     }
 
     public int getCreatureOccupancyRate(Field field) {
-        return (field.columns * field.lines) / 10;
+        return (field.getColumns() * field.getLines()) / 10;
     }
 
-    public void plantGrass(Field field) {
+    void plantGrass(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Grass grass = new Grass(coordinates);
         field.entities.put(coordinates, grass);
@@ -48,12 +48,12 @@ public class InitAction extends Action {
         Rock rock = new Rock(coordinates);
         field.entities.put(coordinates, rock);
     }
-    public void createPredator(Field field) {
+    void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Predator predator = new Predator(coordinates,SPEED_PREDATOR, HEALTH_PREDATOR, ATTACK_POWER);
         field.entities.put(coordinates, predator);
     }
-    public void createHerbivore(Field field) {
+    void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Herbivore herbivore = new Herbivore(coordinates,SPEED_HERBIFORE, HEALTH_HERBIFORE);
         field.entities.put(coordinates, herbivore);
@@ -67,6 +67,6 @@ public class InitAction extends Action {
         return coordinates;
     }
     private Coordinates creatRandomCoordinates(Field field) {
-        return new Coordinates(new Random().nextInt(field.lines), new Random().nextInt(field.columns));
+        return new Coordinates(new Random().nextInt(field.getLines()), new Random().nextInt(field.getColumns()));
     }
 }

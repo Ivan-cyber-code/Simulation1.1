@@ -2,7 +2,7 @@ package gameplay;
 
 public final class Message {
 
-    public final static String PREFACE = """
+    final static String PREFACE = """
                 Приветсвую тебя ты в игре Симуляция!
                                 
                 Здесь волки и зайцы борются за выживание до тех пор пока в живых не останется только один вид существ.
@@ -39,33 +39,33 @@ public final class Message {
                 P.S. Колличество строк и столбцов должно находиться в пределах от 5 до 50 включительно.
                 """;
 
-    public final static String COLUMN_QUERY="Колличество столбцов:";
-    public final static String LINE_QUERY="Колличестов строк:";
-    public final static String MESSAGE_CREATION_WORLD="Мир создан!";
-    public final static String ASSERTION_POSITION_ENTITIES="""
+    final static String COLUMN_QUERY="Колличество столбцов:";
+    final static String LINE_QUERY="Колличестов строк:";
+    final static String MESSAGE_CREATION_WORLD="Мир создан!";
+    final static String ASSERTION_POSITION_ENTITIES="""
                     Нажмите 1 что бы продолжить.
                     Нажмите 2 что бы изменить расположение объектов по умолчанию.
                     """;
-    public final static String MAKE_MOVE="""
+    final static String MAKE_MOVE="""
                 Нажмите 1 что бы сделать ход всеми существами.
                 Нажмите 2 что бы запустить режим постоянного взаимодействия.
                 """;
-    public final static String VICTORI_HERBIFORE="""
+    final static String VICTORI_HERBIFORE="""
                         -------------Конец---------------
                         Зайцы победили!!!
                         """;
-    public final static String VICTORI_PREDATOR="""
+    final static String VICTORI_PREDATOR="""
                         -------------Конец---------------
                         Волки победили!!!
                         """;
-    public final static String INVALID_FORMAT_LIMIT_FIELD ="Неверный формат, нужно ввести натуральное число.";
-    public final static String INVALID_CONDITION="Это число, но оно не входит в диапозн от 5 до 50.";
-    public final static String INVALID_FORMAT_INPUT="""
+    final static String INVALID_FORMAT_LIMIT_FIELD ="Неверный формат, нужно ввести натуральное число.";
+    final static String INVALID_CONDITION="Это число, но оно не входит в диапозн от 5 до 50.";
+    final static String INVALID_FORMAT_INPUT="""
                     Неверный ввод
                     Нужно ввести цифру от 1 до 2.
                     """;
 
-    public final static String SETTING_PAUSE="Для постановки на паузу нажмите 3";
-    public final static String CONTINUATION_SIMULATION="Симуляция находится на паузе, нажмите 4 что бы продолжить";
-    public final static String END="Конец!!!";
+    final static String SETTING_PAUSE="Для постановки на паузу нажмите 3";
+    final static String CONTINUATION_SIMULATION="Симуляция находится на паузе, нажмите 4 что бы продолжить";
+    final static String END="Конец!!!";
 }

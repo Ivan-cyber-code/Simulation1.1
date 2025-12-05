@@ -20,7 +20,7 @@ public class Predator extends Creature {
 
         Herbivore herbivore = findHerbifore(field);
 
-        List<Node> path = showPath(coordinate, herbivore.coordinate, field);
+        List<Node> path = showPath(getCoordinate(), herbivore.getCoordinate(), field);
 
         setMoveConter();
 
@@ -35,10 +35,10 @@ public class Predator extends Creature {
         herbivore.setHealth(-1 * getAttsckPower());
         this.setHealth(HEAL);
         if (herbivore.getHealth() <= 0) {
-            field.entities.remove(herbivore.coordinate);
-            field.entities.remove(coordinate);
-            coordinate = herbivore.coordinate;
-            field.entities.put(coordinate, this);
+            field.entities.remove(herbivore.getCoordinate());
+            field.entities.remove(getCoordinate());
+            setCoordinate(herbivore.getCoordinate());
+            field.entities.put(getCoordinate(), this);
         }
     }
 

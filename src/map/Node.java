@@ -8,7 +8,8 @@ import entity.*;
 
 
 public class Node {
-    public Coordinates coordinates;
+
+    private Coordinates coordinates;
     private Node parent;
 
     private final int[][] SET_MOVES={{0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}};
@@ -23,9 +24,9 @@ public class Node {
 
     public List<Node> findPath(Node start, Node goal, Field field) {
         Queue<Node> queue = new LinkedList<>();
-        boolean[][] visits = new boolean[field.lines][field.columns];
+        boolean[][] visits = new boolean[field.getLines()][field.getColumns()];
         queue.add(start);
-        visits[start.coordinates.line][start.coordinates.column] = true;
+        visits[start.coordinates.getLine()][start.coordinates.getColumn()] = true;
 
         while (!queue.isEmpty()) {
             Node current = queue.poll();
@@ -38,8 +39,8 @@ public class Node {
 
 
             for (int[] direction : SET_MOVES) {
-                int lines = current.coordinates.line + direction[0];
-                int columns = current.coordinates.column + direction[1];
+                int lines = current.coordinates.getLine() + direction[0];
+                int columns = current.coordinates.getColumn() + direction[1];
 
                 if (goalFound) {
                     Node nextNode = new Node(new Coordinates(lines,columns), current);
@@ -59,7 +60,7 @@ public class Node {
     }
 
     private boolean isGoal(Node current, Node goal) {
-        if (current.coordinates.line == goal.coordinates.line && current.coordinates.column == goal.coordinates.column) {
+        if (current.coordinates.getLine() == goal.coordinates.getLine() && current.coordinates.getColumn() == goal.coordinates.getColumn()) {
             return true;
         } else {
             return false;
@@ -75,8 +76,8 @@ public class Node {
     }
     private boolean isNextNodeGoal(Node current, Node goal) {
         for (int[] direction : SET_MOVES) {
-            int newLine = current.coordinates.line + direction[0];
-            int newColumn = current.coordinates.column + direction[1];
+            int newLine = current.coordinates.getLine() + direction[0];
+            int newColumn = current.coordinates.getColumn() + direction[1];
             boolean flag = isGoal(new Node(new Coordinates(newLine, newColumn), current), goal);
             if (flag) {
                 return flag;
@@ -85,7 +86,11 @@ public class Node {
         return false;
     }
     private boolean isValid(int lines, int columns, boolean[][] visits, Field field, Node goal) {
-        return (lines >= 0 && lines < field.lines && columns >= 0 && columns < field.columns && !field.entities.containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
+        return (lines >= 0 && lines < field.getLines() && columns >= 0 && columns < field.getColumns() && !field.entities.containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
 

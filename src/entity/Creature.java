@@ -18,11 +18,11 @@ public abstract class Creature extends Entity {
 
     protected void move(Field field, List<Node> path){
         setHealth(-1);
-        field.entities.remove(coordinate);
-        coordinate=path.get(getSpeed()).coordinates;
-        field.entities.put(coordinate,this);
+        field.entities.remove(getCoordinate());
+        setCoordinate(path.get(getSpeed()).getCoordinates());
+        field.entities.put(getCoordinate(),this);
         if (getHealth() <= 0) {
-            field.entities.remove(coordinate);
+            field.entities.remove(getCoordinate());
         }
     }
 
@@ -39,15 +39,15 @@ public abstract class Creature extends Entity {
     public int getConterMoves() {
         return ConterMoves;
     }
-    public void setMoveConter() {
+    void setMoveConter() {
         this.ConterMoves = ++ConterMoves;
     }
 
-    public int getSpeed() {
+    int getSpeed() {
         return speed;
     }
 
-    public void setHealth(int health) {
+    void setHealth(int health) {
         this.health += health;
     }
     public int getHealth() {

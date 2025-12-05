@@ -9,8 +9,8 @@ import java.util.List;
 public class TurnAction extends Action {
 
     private final int END_HEALTH = 0;
-    public final static int MOVE_REPRODUCTION = 5;
-    public final static int END_CREATURE = 0;
+    private final static int MOVE_REPRODUCTION = 5;
+    private final static int END_CREATURE = 0;
 
     InitAction initActions = new InitAction();
 
@@ -35,7 +35,7 @@ public class TurnAction extends Action {
     }
 
     private void createCreature(Entity entity, Field field) {
-        if (field.entities.size() <= (field.lines * field.columns) / 2) {
+        if (field.entities.size() <= (field.getLines() * field.getColumns()) / 2) {
             if (entity instanceof Herbivore) {
                 initActions.createHerbivore(field);
             } else {

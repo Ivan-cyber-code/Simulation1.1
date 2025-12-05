@@ -2,9 +2,9 @@ package map;
 
 
 public record Sprites() {
-    static String GRASS = " G ";
-    static String TREE = " T ";
-    static String ROCK = " R ";
-    static String HERBIVORE = " H ";
-    static String PREDATOR = " P ";
+    final static String GRASS = " G ";
+    final static String TREE = " T ";
+    final static String ROCK = " R ";
+    final static String HERBIVORE = " H ";
+    final static String PREDATOR = " P ";
 }
