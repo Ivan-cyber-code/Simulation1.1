@@ -7,18 +7,19 @@ import java.util.*;
 
 public class Simulation {
 
-    private final static String PAUSE_GAME="3";
-    private final static String CONTINUE_GAME="4";
-    private final static String ACCEPTABLE_NUMBERS="34";
-    private final static int VALID_SIZE_INPUT=1;
-    private final static String INVALID_ACCEPTABLE_NUMBERS =  """
-                    Неверный ввод
-                    Нужно ввести цифру 3 или 4.
-                    """;
+    private final static String PAUSE_GAME = "3";
+    private final static String CONTINUE_GAME = "4";
+    private final static String ACCEPTABLE_NUMBERS = "34";
+    private final static int VALID_SIZE_INPUT = 1;
+    private final static String INVALID_ACCEPTABLE_NUMBERS = """
+            Неверный ввод
+            Нужно ввести цифру 3 или 4.
+            """;
 
 
     private boolean Paused = false;
-    Field field;
+
+    private Field field;
     int moveCounter;
     Renderer renderer = new Renderer();
     InitAction initActions = new InitAction();
@@ -28,87 +29,6 @@ public class Simulation {
 
     Simulation(Field field) {
         this.field = field;
-    }
-
-    void nextTurn() {
-        moveCounter++;
-
-        System.out.printf("""
-                -----------------ХОД: %s -----------------
-                """, moveCounter);
-        System.out.println();
-
-        turnActions.makeAMoveWithAllCreatures(field);
-
-        System.out.printf("""
-                Всего зайцев: %s;
-                Всехо волков: %s.
-                """, countHarbivore(), countPredator());
-        System.out.println();
-
-        renderer.showMap(field);
-
-        if (!isGrass(field)) {
-            for (int i = countGrass() - 1; i <= countHarbivore(); i++) {
-                initActions.plantGrass(field);
-            }
-            System.out.println();
-        }
-    }
-    private int countPredator() {
-        int count = 0;
-        for (Entity entity : field.entities.values()) {
-            if (entity instanceof Predator) {
-                count++;
-            }
-        }
-        return count;
-    }
-    private int countHarbivore() {
-        int count = 0;
-        for (Entity entity : field.entities.values()) {
-            if (entity instanceof Herbivore) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private void controlSimulation() {
-        try {
-            while (true) {
-                String input = checkInput(SCANNER.next());
-                switch (input) {
-                    case PAUSE_GAME:
-                        pauseGame();
-                        break;
-                    case CONTINUE_GAME:
-                        resumeGame();
-                }
-            }
-        } catch (RuntimeException e){
-
-        }
-    }
-
-    private synchronized void pauseGame() {
-        Paused = true;
-    }
-
-    private synchronized void resumeGame() {
-        Paused = false;
-        synchronized (this) {
-            notifyAll();
-        }
-    }
-
-
-    private String checkInput(String input) {
-        while (!(ACCEPTABLE_NUMBERS.contains(input) && input.length() == VALID_SIZE_INPUT)) {
-            System.out.println(INVALID_ACCEPTABLE_NUMBERS);
-            input = SCANNER.next();
-        }
-        return input;
     }
 
     void startSimulation() {
@@ -138,51 +58,92 @@ public class Simulation {
                     try {
                         wait();
                     } catch (InterruptedException e) {
-                        System.out.println("Конец!!!");;
+                        System.out.println("Конец!!!");
+                        ;
                     }
                 }
             }
         }
 
     }
+    void nextTurn() {
+        moveCounter++;
 
+        System.out.printf("""
+                -----------------ХОД: %s -----------------
+                """, moveCounter);
+        System.out.println();
+
+        turnActions.makeAMoveWithAllCreatures(field);
+
+        int[] countHerbifore0Predator1Grass2=field.countCreature();
+
+        System.out.printf("""
+                Всего зайцев: %s;
+                Всехо волков: %s.
+                """, countHerbifore0Predator1Grass2[0], countHerbifore0Predator1Grass2[1]);
+        System.out.println();
+
+        renderer.showMap(field);
+
+            for (int countGrass = countHerbifore0Predator1Grass2[2]; countGrass <= countHerbifore0Predator1Grass2[0]; countGrass++) {
+                initActions.plantGrass(field);
+            }
+            System.out.println();
+
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    private void controlSimulation() {
+        try {
+            while (true) {
+                String input = checkInput(SCANNER.next());
+                switch (input) {
+                    case PAUSE_GAME:
+                        pauseGame();
+                        break;
+                    case CONTINUE_GAME:
+                        resumeGame();
+                }
+            }
+        } catch (RuntimeException e) {
+
+        }
+    }
+    private synchronized void pauseGame() {
+        Paused = true;
+    }
+    private synchronized void resumeGame() {
+        Paused = false;
+        synchronized (this) {
+            notifyAll();
+        }
+    }
+    private String checkInput(String input) {
+        while (!(ACCEPTABLE_NUMBERS.contains(input) && input.length() == VALID_SIZE_INPUT)) {
+            System.out.println(INVALID_ACCEPTABLE_NUMBERS);
+            input = SCANNER.next();
+        }
+        return input;
+    }
     boolean IsPredator(Field field) {
-        for (Entity entity : field.entities.values()) {
+        for (Entity entity : field.getAllEntities()) {
             if (entity instanceof Predator) {
                 return true;
             }
         }
         return false;
     }
-
-    private int countGrass() {
-        int count = 0;
-        for (Entity entity : field.entities.values()) {
-            if (entity instanceof Grass) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     private boolean isHerbivore(Field field) {
-        for (Entity entity : field.entities.values()) {
+        for (Entity entity : field.getAllEntities()) {
             if (entity instanceof Herbivore) {
                 return true;
             }
         }
         return false;
-    }
-
-    private boolean isGrass(Field field) {
-        int countGrass = -1;
-        int countHerbivore = countHarbivore();
-        for (Entity entity : field.entities.values()) {
-            if (entity instanceof Grass) {
-                countGrass++;
-            }
-        }
-        return countGrass >= countHerbivore;
     }
 
 }

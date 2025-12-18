@@ -58,19 +58,19 @@ public class GameLoop {
 
     public void startGame() {
 
-        simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
+        simulation.initActions.putEntitiesrDefoultPositions(simulation.getField());
         System.out.println(Message.MESSAGE_CREATION_WORLD);
-        simulation.renderer.showMap(simulation.field);
+        simulation.renderer.showMap(simulation.getField());
         INNER:
         while (true) {
             System.out.println(Message.ASSERTION_POSITION_ENTITIES);
             String input = makeChoice(scanner);
             switch (input) {
                 case "2":
-                    simulation.field.entities = new HashMap<>();
-                    simulation.initActions.putEntitiesrDefoultPositions(simulation.field);
+                    simulation.getField().getEntities().clear();
+                    simulation.initActions.putEntitiesrDefoultPositions(simulation.getField());
                     System.out.println(Message.MESSAGE_CREATION_WORLD);
-                    simulation.renderer.showMap(simulation.field);
+                    simulation.renderer.showMap(simulation.getField());
                     break;
                 case "1":
                     break INNER;
@@ -93,12 +93,12 @@ public class GameLoop {
         } catch (RuntimeException runtimeException) {
 
 
-            if (simulation.IsPredator(simulation.field)) {
+            if (simulation.IsPredator(simulation.getField())) {
                 System.out.println(Message.VICTORI_PREDATOR);
-                simulation.renderer.showMap(simulation.field);
+                simulation.renderer.showMap(simulation.getField());
             } else {
                 System.out.println(Message.VICTORI_HERBIFORE);
-                simulation.renderer.showMap(simulation.field);
+                simulation.renderer.showMap(simulation.getField());
             }
             simulation.SCANNER.close();
             scanner.close();

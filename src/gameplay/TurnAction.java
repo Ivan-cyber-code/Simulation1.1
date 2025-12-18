@@ -17,7 +17,7 @@ public class TurnAction extends Action {
     public void makeAMoveWithAllCreatures(Field field) {
 
 
-        List<Entity> copyField = new ArrayList<>(field.entities.values());
+        List<Entity> copyField = new ArrayList<>(field.getEntities().values());
 
 
         for (Entity entity : copyField) {
@@ -35,7 +35,7 @@ public class TurnAction extends Action {
     }
 
     private void createCreature(Entity entity, Field field) {
-        if (field.entities.size() <= (field.getLines() * field.getColumns()) / 2) {
+        if (field.getEntities().size() <= (field.getLines() * field.getColumns()) / 2) {
             if (entity instanceof Herbivore) {
                 initActions.createHerbivore(field);
             } else {

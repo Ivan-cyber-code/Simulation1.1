@@ -86,7 +86,7 @@ public class Node {
         return false;
     }
     private boolean isValid(int lines, int columns, boolean[][] visits, Field field, Node goal) {
-        return (lines >= 0 && lines < field.getLines() && columns >= 0 && columns < field.getColumns() && !field.entities.containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
+        return (lines >= 0 && lines < field.getLines() && columns >= 0 && columns < field.getColumns() && !field.getEntities().containsKey(new Coordinates(lines, columns)) && !visits[lines][columns]);
     }
 
     public Coordinates getCoordinates() {

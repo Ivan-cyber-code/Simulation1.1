@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Predator extends Creature {
 
-    private final int HEAL = 3;
+
 
     private int attsckPower;
 
@@ -18,7 +18,7 @@ public class Predator extends Creature {
     @Override
     public void makeMove(Field field) {
 
-        Herbivore herbivore = findHerbifore(field);
+        Herbivore herbivore = (Herbivore) field.findEntities(this);
 
         List<Node> path = showPath(getCoordinate(), herbivore.getCoordinate(), field);
 
@@ -35,25 +35,19 @@ public class Predator extends Creature {
         herbivore.setHealth(-1 * getAttsckPower());
         this.setHealth(HEAL);
         if (herbivore.getHealth() <= 0) {
-            field.entities.remove(herbivore.getCoordinate());
-            field.entities.remove(getCoordinate());
-            setCoordinate(herbivore.getCoordinate());
-            field.entities.put(getCoordinate(), this);
+            killing(field,herbivore);
         }
+    }
+
+    private void killing(Field field, Herbivore herbivore) {
+        field.deleteEntities(herbivore.getCoordinate());
+        field.deleteEntities(getCoordinate());
+        setCoordinate(herbivore.getCoordinate());
+        field.installEntities(getCoordinate(),this);
     }
 
     public int getAttsckPower() {
         return attsckPower;
     }
-
-    private Herbivore findHerbifore(Field field) {
-        for (Entity entity : field.entities.values()) {
-            if (entity instanceof Herbivore) {
-                return ((Herbivore) entity);
-            }
-        }
-        return null;
-    }
-
 
 }

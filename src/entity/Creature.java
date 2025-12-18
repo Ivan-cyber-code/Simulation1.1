@@ -2,6 +2,7 @@ package entity;
 
 import map.Field;
 import map.Node;
+
 import java.util.List;
 
 public abstract class Creature extends Entity {
@@ -9,6 +10,7 @@ public abstract class Creature extends Entity {
     private int ConterMoves;
     private int speed;
     private int health;
+    public final int HEAL = 3;
 
     Creature(Coordinates coordinates, int speed, int health) {
         super(coordinates);
@@ -16,13 +18,14 @@ public abstract class Creature extends Entity {
         this.health = health;
     }
 
-    protected void move(Field field, List<Node> path){
+    protected void move(Field field, List<Node> path) {
         setHealth(-1);
-        field.entities.remove(getCoordinate());
-        setCoordinate(path.get(getSpeed()).getCoordinates());
-        field.entities.put(getCoordinate(),this);
         if (getHealth() <= 0) {
-            field.entities.remove(getCoordinate());
+            field.deleteEntities(getCoordinate());
+        } else {
+            field.deleteEntities(getCoordinate());
+            setCoordinate(path.get(getSpeed()).getCoordinates());
+            field.installEntities(getCoordinate(), this);
         }
     }
 
@@ -39,6 +42,7 @@ public abstract class Creature extends Entity {
     public int getConterMoves() {
         return ConterMoves;
     }
+
     void setMoveConter() {
         this.ConterMoves = ++ConterMoves;
     }
@@ -50,6 +54,7 @@ public abstract class Creature extends Entity {
     void setHealth(int health) {
         this.health += health;
     }
+
     public int getHealth() {
         return health;
     }

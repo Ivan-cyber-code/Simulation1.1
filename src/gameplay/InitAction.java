@@ -16,7 +16,7 @@ public class InitAction extends Action {
 
     private int creatureOccupancyRate;
 
-    public void putEntitiesrDefoultPositions(Field field) {
+    void putEntitiesrDefoultPositions(Field field) {
 
         creatureOccupancyRate = getCreatureOccupancyRate(field);
 
@@ -29,39 +29,41 @@ public class InitAction extends Action {
         }
     }
 
-    public int getCreatureOccupancyRate(Field field) {
+    private int getCreatureOccupancyRate(Field field) {
         return (field.getColumns() * field.getLines()) / 10;
     }
 
     void plantGrass(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Grass grass = new Grass(coordinates);
-        field.entities.put(coordinates, grass);
+        field.installEntities(coordinates, grass);
     }
     private void createTree(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Tree tree = new Tree(coordinates);
-        field.entities.put(coordinates, tree);
+        field.installEntities(coordinates,tree);
     }
+
     private void createRock(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Rock rock = new Rock(coordinates);
-        field.entities.put(coordinates, rock);
+        field.installEntities(coordinates,rock);
     }
+
     void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Predator predator = new Predator(coordinates,SPEED_PREDATOR, HEALTH_PREDATOR, ATTACK_POWER);
-        field.entities.put(coordinates, predator);
+        field.installEntities(coordinates,predator);
     }
     void createHerbivore(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Herbivore herbivore = new Herbivore(coordinates,SPEED_HERBIFORE, HEALTH_HERBIFORE);
-        field.entities.put(coordinates, herbivore);
+        field.installEntities(coordinates,herbivore);
     }
 
     private Coordinates createNewUniqueCoordinates(Field field) {
         Coordinates coordinates = creatRandomCoordinates(field);
-        while (field.entities.containsKey(coordinates)) {
+        while (field.getEntities().containsKey(coordinates)) {
             coordinates = creatRandomCoordinates(field);
         }
         return coordinates;
