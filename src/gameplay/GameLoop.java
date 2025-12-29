@@ -91,8 +91,6 @@ public class GameLoop {
                 }
             }
         } catch (RuntimeException runtimeException) {
-
-
             if (simulation.IsPredator(simulation.getField())) {
                 System.out.println(Message.VICTORI_PREDATOR);
                 simulation.renderer.showMap(simulation.getField());

@@ -14,24 +14,22 @@ public class Herbivore extends Creature {
     @Override
     public void makeMove(Field field) {
 
-        Grass grass = (Grass) field.findEntities(this);
-
-        List<Node> path = showPath(getCoordinate(), grass.getCoordinate(), field);
+        List<Node> path = showPath(getCoordinate(), Grass.class, field);
 
         setMoveConter();
 
-        if (path.size() - 1 > getSpeed()) {
+        if (path.size() - 1 >= getSpeed()) {
             move(field, path);
         } else {
-            eatGrass(field, grass);
+            eatGrass(field, path);
         }
     }
 
 
-    private void eatGrass(Field field, Entity grass) {
-        field.deleteEntities(grass.getCoordinate());
+    private void eatGrass(Field field, List<Node> grass) {
         field.deleteEntities(getCoordinate());
-        setCoordinate(grass.getCoordinate());
+        field.deleteEntities(getCoordinate());
+        setCoordinate(grass.get(grass.size()-1).getCoordinates());
         setHealth(HEAL);
         field.installEntities(getCoordinate(),this);
     }

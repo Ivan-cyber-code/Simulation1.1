@@ -14,6 +14,7 @@ public class Field {
 
     private Map<Coordinates, Entity> entities = new HashMap<>();
 
+
     public Field(int lines, int columns) {
         this.lines = lines;
         this.columns = columns;
@@ -29,23 +30,11 @@ public class Field {
     public void deleteEntities(Coordinates coordinates) {
         entities.remove(coordinates);
     }
+
     public void installEntities(Coordinates coordinates, Entity entity) {
         entities.put(coordinates, entity);
     }
-    public Entity findEntities(Entity thisEntity) {
-        for (Entity entity : entities.values()) {
-            if (thisEntity instanceof Herbivore) {
-                if (entity instanceof Grass) {
-                    return entity;
-                }
-            } else {
-                if (entity instanceof Herbivore) {
-                    return entity;
-                }
-            }
-        }
-        return null;
-    }
+
     public int[] countCreature() {
         int countHerbifore = 0;
         int countPredator = 0;

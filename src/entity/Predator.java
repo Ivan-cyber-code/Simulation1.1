@@ -18,24 +18,23 @@ public class Predator extends Creature {
     @Override
     public void makeMove(Field field) {
 
-        Herbivore herbivore = (Herbivore) field.findEntities(this);
-
-        List<Node> path = showPath(getCoordinate(), herbivore.getCoordinate(), field);
+        List<Node> path = showPath(getCoordinate(), Herbivore.class, field);
 
         setMoveConter();
 
         if (path.size() - 1 > getSpeed()) {
             move(field, path);
         } else {
-            attack(field, herbivore);
+            attack(field, path);
         }
     }
 
-    private void attack(Field field, Herbivore herbivore) {
-        herbivore.setHealth(-1 * getAttsckPower());
+    private void attack(Field field, List<Node> herbivore) {
+        Herbivore herbivore1 = (Herbivore) field.getEntities().get(herbivore.get(herbivore.size()-1).getCoordinates());
+        herbivore1.setHealth(-1*getAttsckPower());
         this.setHealth(HEAL);
-        if (herbivore.getHealth() <= 0) {
-            killing(field,herbivore);
+        if (herbivore1.getHealth() <= 0) {
+            killing(field, herbivore1);
         }
     }
 

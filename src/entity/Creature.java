@@ -2,6 +2,7 @@ package entity;
 
 import map.Field;
 import map.Node;
+import map.PathFinder;
 
 import java.util.List;
 
@@ -29,12 +30,11 @@ public abstract class Creature extends Entity {
         }
     }
 
-    protected List<Node> showPath(Coordinates current, Coordinates goal, Field field) {
+    protected List<Node> showPath(Coordinates current, Class<? extends Entity> goalType, Field field) {
 
         Node currentNode = new Node(current, null);
-        Node goalNode = new Node(goal, null);
 
-        return new Node().findPath(currentNode, goalNode, field);
+        return new PathFinder().findPath(currentNode, goalType, field);
     }
 
     public abstract void makeMove(Field field);
@@ -51,7 +51,7 @@ public abstract class Creature extends Entity {
         return speed;
     }
 
-    void setHealth(int health) {
+    public void setHealth(int health) {
         this.health += health;
     }
 
