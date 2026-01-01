@@ -5,9 +5,6 @@ import map.Node;
 import java.util.List;
 
 public class Predator extends Creature {
-
-
-
     private int attsckPower;
 
     public Predator(Coordinates coordinates, int speed, int health, int attackPower) {
@@ -17,11 +14,8 @@ public class Predator extends Creature {
 
     @Override
     public void makeMove(Field field) {
-
         List<Node> path = showPath(getCoordinate(), Herbivore.class, field);
-
         setMoveConter();
-
         if (path.size() - 1 > getSpeed()) {
             move(field, path);
         } else {

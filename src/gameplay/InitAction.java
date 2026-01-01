@@ -12,7 +12,7 @@ public class InitAction extends Action {
     private final static int ATTACK_POWER=4;
 
     private final static int SPEED_HERBIFORE=2;
-    private final static int HEALTH_HERBIFORE=5;
+    private final static int HEALTH_HERBIFORE=7;
 
     private int creatureOccupancyRate;
 
@@ -35,18 +35,18 @@ public class InitAction extends Action {
 
     void plantGrass(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Grass grass = new Grass(coordinates);
+        Grass grass = new Grass();
         field.installEntities(coordinates, grass);
     }
     private void createTree(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Tree tree = new Tree(coordinates);
+        Tree tree = new Tree();
         field.installEntities(coordinates,tree);
     }
 
     private void createRock(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
-        Rock rock = new Rock(coordinates);
+        Rock rock = new Rock();
         field.installEntities(coordinates,rock);
     }
 

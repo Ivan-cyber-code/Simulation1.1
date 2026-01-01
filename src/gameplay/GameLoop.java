@@ -85,12 +85,14 @@ public class GameLoop {
                 switch (input) {
                     case "1":
                         simulation.nextTurn();
+                        System.out.println(Message.MAKE_MOVE);
                         break;
                     case "2":
                         simulation.startSimulation();
                 }
             }
         } catch (RuntimeException runtimeException) {
+            runtimeException.printStackTrace();
             if (simulation.IsPredator(simulation.getField())) {
                 System.out.println(Message.VICTORI_PREDATOR);
                 simulation.renderer.showMap(simulation.getField());

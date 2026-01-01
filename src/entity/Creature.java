@@ -8,13 +8,14 @@ import java.util.List;
 
 public abstract class Creature extends Entity {
 
+    private Coordinates coordinate;
     private int ConterMoves;
     private int speed;
     private int health;
     public final int HEAL = 3;
 
     Creature(Coordinates coordinates, int speed, int health) {
-        super(coordinates);
+        this.coordinate=coordinates;
         this.speed = speed;
         this.health = health;
     }
@@ -58,4 +59,13 @@ public abstract class Creature extends Entity {
     public int getHealth() {
         return health;
     }
+    Coordinates getCoordinate() {
+        return coordinate;
+    }
+
+    void setCoordinate(Coordinates coordinate) {
+        this.coordinate = coordinate;
+    }
+
+
 }

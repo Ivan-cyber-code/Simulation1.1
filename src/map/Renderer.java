@@ -33,12 +33,9 @@ public class Renderer {
         if (field.getEntities().get(coordinates) instanceof Herbivore) {
             return Sprites.HERBIVORE;
         }
-
-        if (field.getEntities().get(coordinates) instanceof Predator) {
-            return Sprites.PREDATOR;
-        }
-        return null;
+        return Sprites.PREDATOR;
     }
+
     private boolean isCellEven(int lines, int columns) {
         return (lines + columns) % 2 == 0;
 
