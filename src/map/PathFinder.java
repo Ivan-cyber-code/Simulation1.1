@@ -11,38 +11,42 @@ public class PathFinder {
 
     public List<Node> findPath(Node start, Class<? extends Entity> goalType, Field field) {
         Queue<Node> queue = new LinkedList<>();
-        boolean[][] visits = new boolean[field.getLines()][field.getColumns()];
+        boolean[][] visited = new boolean[field.getLines()][field.getColumns()];
+
         queue.add(start);
-        visits[start.getCoordinates().getLine()][start.getCoordinates().getColumn()] = true;
+        visited[start.getCoordinates().getLine()][start.getCoordinates().getColumn()] = true;
 
         while (!queue.isEmpty()) {
             Node current = queue.poll();
 
+            // Проверяем: а вдруг текущая нода — цель?
             if (isGoal(current, goalType, field)) {
                 return extractPath(current);
             }
 
-            boolean goalFound = isNextNodeGoal(current, goalType, field);
-
-
+            // Расширяем поиск во все стороны
             for (int[] direction : Node.SET_MOVES) {
-                int lines = current.getCoordinates().getLine() + direction[0];
-                int columns = current.getCoordinates().getColumn() + direction[1];
+                int newLine = current.getCoordinates().getLine() + direction[0];
+                int newCol = current.getCoordinates().getColumn() + direction[1];
 
-                if (goalFound) {
-                    Node nextNode = new Node(new Coordinates(lines,columns), current);
+                // Проверяем, можно ли идти в эту клетку
+                if (isValid(newLine, newCol, visited, field)) {
+                    visited[newLine][newCol] = true;
+
+                    Node nextNode = new Node(new Coordinates(newLine, newCol), current);
+
+                    // Сразу проверяем: а не цель ли это?
                     if (isGoal(nextNode, goalType, field)) {
                         return extractPath(nextNode);
                     }
-                } else {
-                    if (isValid(lines, columns, visits, field)) {
-                        visits[lines][columns] = true;
-                        queue.add(new Node(new Coordinates(lines, columns), current));
-                    }
-                }
 
+                    // Если нет — добавляем в очередь для дальнейшего поиска
+                    queue.add(nextNode);
+                }
             }
         }
+
+        // Путь не найден — возвращаем пустой список (это нормально)
         return List.of();
     }
 
