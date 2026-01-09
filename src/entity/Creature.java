@@ -13,6 +13,7 @@ public abstract class Creature extends Entity {
     private int speed;
     private int health;
     public final int HEAL = 3;
+    public final int HUNGER = -1;
 
     Creature(Coordinates coordinates, int speed, int health) {
         this.coordinate=coordinates;
@@ -21,7 +22,7 @@ public abstract class Creature extends Entity {
     }
 
     protected void move(Field field, List<Node> path) {
-        setHealth(-1);
+        setHealth(HUNGER);
         if (getHealth() <= 0) {
             field.deleteEntities(getCoordinate());
         } else {

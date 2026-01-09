@@ -16,6 +16,10 @@ public class Predator extends Creature {
     public void makeMove(Field field) {
         List<Node> path = showPath(getCoordinate(), Herbivore.class, field);
         setMoveConter();
+        if (path.isEmpty()) {
+            setHealth(HUNGER);
+            return;
+        }
         if (path.size() - 1 > getSpeed()) {
             move(field, path);
         } else {
@@ -24,19 +28,21 @@ public class Predator extends Creature {
     }
 
     private void attack(Field field, List<Node> herbivore) {
+        if (herbivore.size()==0){
+            System.out.println("Путь не найден сейас выбросится Exception");
+        }
         Herbivore herbivore1 = (Herbivore) field.getEntities().get(herbivore.get(herbivore.size()-1).getCoordinates());
         herbivore1.setHealth(-1*getAttsckPower());
         this.setHealth(HEAL);
         if (herbivore1.getHealth() <= 0) {
             killing(field, herbivore1);
+            field.installEntities(herbivore1.getCoordinate(),this);
         }
     }
 
     private void killing(Field field, Herbivore herbivore) {
         field.deleteEntities(herbivore.getCoordinate());
         field.deleteEntities(getCoordinate());
-        setCoordinate(herbivore.getCoordinate());
-        field.installEntities(getCoordinate(),this);
     }
 
     public int getAttsckPower() {

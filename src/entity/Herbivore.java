@@ -14,6 +14,10 @@ public class Herbivore extends Creature {
     public void makeMove(Field field) {
         List<Node> path = showPath(getCoordinate(), Grass.class, field);
         setMoveConter();
+        if (path.isEmpty()) {
+            setHealth(HUNGER);
+            return;
+        }
         if (path.size() - 1 >= getSpeed()) {
             move(field, path);
         } else {
