@@ -28,9 +28,6 @@ public class Predator extends Creature {
     }
 
     private void attack(Field field, List<Node> herbivore) {
-        if (herbivore.size()==0){
-            System.out.println("Путь не найден сейас выбросится Exception");
-        }
         Herbivore herbivore1 = (Herbivore) field.getEntities().get(herbivore.get(herbivore.size()-1).getCoordinates());
         herbivore1.setHealth(-1*getAttsckPower());
         this.setHealth(HEAL);

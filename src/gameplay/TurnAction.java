@@ -8,6 +8,7 @@ import java.util.List;
 
 public class TurnAction extends Action {
 
+    private static final double MAXIMUMCARDLIMIT = 0.25;
     private final int END_HEALTH = 0;
     private final static int MOVE_REPRODUCTION = 5;
     private final static int END_CREATURE = 0;
@@ -35,7 +36,7 @@ public class TurnAction extends Action {
     }
 
     private void createCreature(Entity entity, Field field) {
-        if (field.getEntities().size() <= (field.getLines() * field.getColumns()) / 2) {
+        if (field.getEntities().size()<field.getColumns()*field.getLines()*MAXIMUMCARDLIMIT) {
             if (entity instanceof Herbivore) {
                 initActions.createHerbivore(field);
             } else {

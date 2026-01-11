@@ -12,7 +12,7 @@ public abstract class Creature extends Entity {
     private int ConterMoves;
     private int speed;
     private int health;
-    public final int HEAL = 3;
+    public final int HEAL = 4;
     public final int HUNGER = -1;
 
     Creature(Coordinates coordinates, int speed, int health) {

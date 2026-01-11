@@ -8,19 +8,19 @@ import java.util.Random;
 public class InitAction extends Action {
 
     private final static int SPEED_PREDATOR=1;
-    private final static int HEALTH_PREDATOR =3;
-    private final static int ATTACK_POWER=4;
+    private final static int HEALTH_PREDATOR =2;
+    private final static int ATTACK_POWER=3;
 
-    private final static int SPEED_HERBIFORE=2;
+    private final static int SPEED_HERBIFORE=3;
     private final static int HEALTH_HERBIFORE=7;
 
-    private int creatureOccupancyRate;
+    private int maximumCardLimit;
 
     void putEntitiesrDefoultPositions(Field field) {
 
-        creatureOccupancyRate = getCreatureOccupancyRate(field);
+        maximumCardLimit = getMaximumCardLimit(field);
 
-        for (int i = 0; i < creatureOccupancyRate; i++) {
+        for (int i = 0; i < maximumCardLimit; i++) {
             plantGrass(field);
             createHerbivore(field);
             createPredator(field);
@@ -29,8 +29,8 @@ public class InitAction extends Action {
         }
     }
 
-    private int getCreatureOccupancyRate(Field field) {
-        return (field.getColumns() * field.getLines()) / 10;
+    int getMaximumCardLimit(Field field) {
+        return (field.getColumns() * field.getLines()) / 20;
     }
 
     void plantGrass(Field field) {

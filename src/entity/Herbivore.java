@@ -26,9 +26,6 @@ public class Herbivore extends Creature {
     }
 
     private void eatGrass(Field field, List<Node> grass) {
-        if(grass.size()==0){
-            System.out.println("Внимание сейчас выбросится Exception");
-        }
         field.deleteEntities(getCoordinate());
         field.deleteEntities(grass.get(grass.size()-1).getCoordinates());
         setCoordinate(grass.get(grass.size() - 1).getCoordinates());
