@@ -1,4 +1,4 @@
-package gameplay;
+package action;
 
 import entity.*;
 import map.*;
@@ -6,26 +6,28 @@ import map.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TurnAction extends Action {
+public class makeMoveCreaturesAction extends Action {
 
     private static final double MAXIMUMCARDLIMIT = 0.25;
     private final int END_HEALTH = 0;
     private final static int MOVE_REPRODUCTION = 5;
     private final static int END_CREATURE = 0;
 
-    InitAction initActions = new InitAction();
+    SpawnEntityAction spawnEntityActions = new SpawnEntityAction();
 
-    public void makeAMoveWithAllCreatures(Field field) {
-
-
+    public void execute(Field field) {
         List<Entity> copyField = new ArrayList<>(field.getEntities().values());
-
-
         for (Entity entity : copyField) {
-            if (entity instanceof Creature) {
-                if (((Creature) entity).getHealth() <= END_HEALTH) {
+            if (isCreature(entity)){
+                if (isDeadAlive(entity)) {
                     continue;
                 }
+            }
+
+            if (entity instanceof Creature) {
+//                if (((Creature) entity).getHealth() <= END_HEALTH) {
+//                    continue;
+//                }
                 if (((Creature) entity).getConterMoves() % MOVE_REPRODUCTION == 0 && ((Creature) entity).getConterMoves() != END_CREATURE) {
                     createCreature(entity, field);
                 }
@@ -35,12 +37,20 @@ public class TurnAction extends Action {
         }
     }
 
+    private boolean isDeadAlive(Entity entity) {
+        return ((Creature)entity).getHealth()<=END_HEALTH;
+    }
+
+    private boolean isCreature(Entity entity) {
+        return entity instanceof Creature;
+    }
+
     private void createCreature(Entity entity, Field field) {
         if (field.getEntities().size()<field.getColumns()*field.getLines()*MAXIMUMCARDLIMIT) {
             if (entity instanceof Herbivore) {
-                initActions.createHerbivore(field);
+                spawnEntityActions.createHerbivore(field);
             } else {
-                initActions.createPredator(field);
+                spawnEntityActions.createPredator(field);
             }
         }
     }

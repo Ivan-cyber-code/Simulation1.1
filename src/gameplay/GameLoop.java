@@ -2,19 +2,13 @@ package gameplay;
 
 import map.Field;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameLoop {
-
     private final static int MAX_LIMIT_FIELD=50;
     private final static int MIN_LIMIT_FIELD=5;
     private final static String VALID_CHOICE="12";
     private final static int VALID_SIZE_INPUT=1;
-
-    static {
-        System.out.println(Message.PREFACE);
-    }
 
     private final Scanner scanner = new Scanner(System.in);
     private final Simulation simulation = new Simulation(new Field(createdLine(), createdColumns()));
@@ -55,20 +49,19 @@ public class GameLoop {
         return true;
     }
 
-
     public void startGame() {
-
-        simulation.initActions.putEntitiesrDefoultPositions(simulation.getField());
+        System.out.println(Message.PREFACE);
+        simulation.spawnEntityActions.execute(simulation.getField());
         System.out.println(Message.MESSAGE_CREATION_WORLD);
         simulation.renderer.showMap(simulation.getField());
         INNER:
         while (true) {
             System.out.println(Message.ASSERTION_POSITION_ENTITIES);
-            String input = makeChoice(scanner);
+            String input = makeChoice();
             switch (input) {
                 case "2":
                     simulation.getField().getEntities().clear();
-                    simulation.initActions.putEntitiesrDefoultPositions(simulation.getField());
+                    simulation.spawnEntityActions.execute(simulation.getField());
                     System.out.println(Message.MESSAGE_CREATION_WORLD);
                     simulation.renderer.showMap(simulation.getField());
                     break;
@@ -81,7 +74,7 @@ public class GameLoop {
 
         try {
             while (true) {
-                String input = makeChoice(scanner);
+                String input = makeChoice();
                 switch (input) {
                     case "1":
                         simulation.nextTurn();
@@ -106,7 +99,7 @@ public class GameLoop {
         scanner.close();
     }
 
-    private String makeChoice(Scanner scanner) {
+    private String makeChoice() {
         String input = scanner.next();
         while (!(VALID_CHOICE.contains(input) && input.length() == VALID_SIZE_INPUT)) {
             System.out.println(Message.INVALID_FORMAT_INPUT);

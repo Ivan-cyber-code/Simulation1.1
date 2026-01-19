@@ -1,11 +1,11 @@
-package gameplay;
+package action;
 
 import entity.*;
 import map.*;
 
 import java.util.Random;
 
-public class InitAction extends Action {
+public class SpawnEntityAction extends Action {
 
     private final static int SPEED_PREDATOR=1;
     private final static int HEALTH_PREDATOR =2;
@@ -16,10 +16,8 @@ public class InitAction extends Action {
 
     private int maximumCardLimit;
 
-    void putEntitiesrDefoultPositions(Field field) {
-
+    void execute(Field field) {
         maximumCardLimit = getMaximumCardLimit(field);
-
         for (int i = 0; i < maximumCardLimit; i++) {
             plantGrass(field);
             createHerbivore(field);
@@ -29,7 +27,7 @@ public class InitAction extends Action {
         }
     }
 
-    int getMaximumCardLimit(Field field) {
+    private int getMaximumCardLimit(Field field) {
         return (field.getColumns() * field.getLines()) / 20;
     }
 

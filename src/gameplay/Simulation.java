@@ -1,5 +1,7 @@
 package gameplay;
 
+import action.SpawnEntityAction;
+import action.makeMoveCreaturesAction;
 import entity.*;
 import map.*;
 
@@ -22,8 +24,8 @@ public class Simulation {
     private Field field;
     int moveCounter;
     Renderer renderer = new Renderer();
-    InitAction initActions = new InitAction();
-    TurnAction turnActions = new TurnAction();
+    SpawnEntityAction spawnEntityActions = new SpawnEntityAction();
+    makeMoveCreaturesAction makeMoveCreaturesActions = new makeMoveCreaturesAction();
 
     final Scanner SCANNER = new Scanner(System.in);
 
@@ -74,7 +76,7 @@ public class Simulation {
                 """, moveCounter);
         System.out.println();
 
-        turnActions.makeAMoveWithAllCreatures(field);
+        makeMoveCreaturesActions.execute(field);
 
         int[] countHerbifore0Predator1Grass2=field.countCreature();
 
@@ -87,7 +89,7 @@ public class Simulation {
         renderer.showMap(field);
 
             for (int countGrass = countHerbifore0Predator1Grass2[2]; countGrass <= countHerbifore0Predator1Grass2[0]; countGrass++) {
-                initActions.plantGrass(field);
+                spawnEntityActions.plantGrass(field);
             }
             System.out.println();
 
