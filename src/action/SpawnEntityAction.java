@@ -6,18 +6,18 @@ import map.*;
 import java.util.Random;
 
 public class SpawnEntityAction extends Action {
-
     private final static int SPEED_PREDATOR=1;
     private final static int HEALTH_PREDATOR =2;
     private final static int ATTACK_POWER=3;
-
     private final static int SPEED_HERBIFORE=3;
     private final static int HEALTH_HERBIFORE=7;
+    final static int CONSTLIMITCARD=1/20;
 
-    private int maximumCardLimit;
+    int maximumCardLimit;
 
-    void execute(Field field) {
-        maximumCardLimit = getMaximumCardLimit(field);
+
+    public void execute(Field field) {
+        maximumCardLimit = countMaximumCardLimit(field);
         for (int i = 0; i < maximumCardLimit; i++) {
             plantGrass(field);
             createHerbivore(field);
@@ -27,8 +27,8 @@ public class SpawnEntityAction extends Action {
         }
     }
 
-    private int getMaximumCardLimit(Field field) {
-        return (field.getColumns() * field.getLines()) / 20;
+    int countMaximumCardLimit(Field field) {
+        return field.countSizeMap() / CONSTLIMITCARD;
     }
 
     void plantGrass(Field field) {
@@ -41,13 +41,11 @@ public class SpawnEntityAction extends Action {
         Tree tree = new Tree();
         field.installEntities(coordinates,tree);
     }
-
     private void createRock(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Rock rock = new Rock();
         field.installEntities(coordinates,rock);
     }
-
     void createPredator(Field field) {
         Coordinates coordinates = createNewUniqueCoordinates(field);
         Predator predator = new Predator(coordinates,SPEED_PREDATOR, HEALTH_PREDATOR, ATTACK_POWER);

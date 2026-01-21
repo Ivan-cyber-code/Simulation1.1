@@ -1,7 +1,7 @@
 package gameplay;
 
 import action.SpawnEntityAction;
-import action.makeMoveCreaturesAction;
+import action.MakeMoveCreaturesAction;
 import entity.*;
 import map.*;
 
@@ -25,7 +25,7 @@ public class Simulation {
     int moveCounter;
     Renderer renderer = new Renderer();
     SpawnEntityAction spawnEntityActions = new SpawnEntityAction();
-    makeMoveCreaturesAction makeMoveCreaturesActions = new makeMoveCreaturesAction();
+    MakeMoveCreaturesAction makeMoveCreaturesActions = new MakeMoveCreaturesAction();
 
     final Scanner SCANNER = new Scanner(System.in);
 

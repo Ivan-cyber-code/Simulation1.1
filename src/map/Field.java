@@ -7,13 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Field {
-
-
     private final int lines;
     private final int columns;
 
     private Map<Coordinates, Entity> entities = new HashMap<>();
-
 
     public Field(int lines, int columns) {
         this.lines = lines;
@@ -30,11 +27,9 @@ public class Field {
     public void deleteEntities(Coordinates coordinates) {
         entities.remove(coordinates);
     }
-
     public void installEntities(Coordinates coordinates, Entity entity) {
         entities.put(coordinates, entity);
     }
-
     public int[] countCreature() {
         int countHerbifore = 0;
         int countPredator = 0;
@@ -55,7 +50,12 @@ public class Field {
     public Collection<Entity> getAllEntities(){
         return entities.values();
     }
-
+    public int countSizeEntities(){
+        return entities.size();
+    }
+    public int countSizeMap(){
+        return lines*columns;
+    }
     public Map<Coordinates, Entity> getEntities() {
         return entities;
     }
