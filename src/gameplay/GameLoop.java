@@ -1,5 +1,6 @@
 package gameplay;
 
+import action.*;
 import map.Field;
 
 import java.util.Scanner;
@@ -12,6 +13,8 @@ public class GameLoop {
 
     private final Scanner scanner = new Scanner(System.in);
     private final Simulation simulation = new Simulation(new Field(createdLine(), createdColumns()));
+    private final Action initAction = new SpawnEntityAction();
+    private final static Action[] turnAction = new Action[]{new SpawnCreatureAction(), new MakeMoveCreaturesAction()};
 
     private int createdColumns() {
         System.out.println(Message.COLUMN_QUERY);
@@ -51,7 +54,7 @@ public class GameLoop {
 
     public void startGame() {
         System.out.println(Message.PREFACE);
-        simulation.spawnEntityActions.execute(simulation.getField());
+        initAction.execute(simulation.getField());
         System.out.println(Message.MESSAGE_CREATION_WORLD);
         simulation.renderer.showMap(simulation.getField());
         INNER:
@@ -61,7 +64,7 @@ public class GameLoop {
             switch (input) {
                 case "2":
                     simulation.getField().getEntities().clear();
-                    simulation.spawnEntityActions.execute(simulation.getField());
+                    initAction.execute(simulation.getField());
                     System.out.println(Message.MESSAGE_CREATION_WORLD);
                     simulation.renderer.showMap(simulation.getField());
                     break;
@@ -69,9 +72,7 @@ public class GameLoop {
                     break INNER;
             }
         }
-
         System.out.println(Message.MAKE_MOVE);
-
         try {
             while (true) {
                 String input = makeChoice();

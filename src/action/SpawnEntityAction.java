@@ -11,14 +11,11 @@ public class SpawnEntityAction extends Action {
     private final static int ATTACK_POWER=3;
     private final static int SPEED_HERBIFORE=3;
     private final static int HEALTH_HERBIFORE=7;
-    final static int CONSTLIMITCARD=1/20;
-
-    int maximumCardLimit;
-
+    final static int CONSTLIMITCARD=1/5;
 
     public void execute(Field field) {
-        maximumCardLimit = countMaximumCardLimit(field);
-        for (int i = 0; i < maximumCardLimit; i++) {
+        int limitEntity = field.countSizeMap()*CONSTLIMITCARD;
+        while (field.countSizeEntities() < limitEntity) {
             plantGrass(field);
             createHerbivore(field);
             createPredator(field);

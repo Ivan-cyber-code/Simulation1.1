@@ -1,5 +1,7 @@
 package gameplay;
 
+import action.Action;
+import action.SpawnCreatureAction;
 import action.SpawnEntityAction;
 import action.MakeMoveCreaturesAction;
 import entity.*;
@@ -8,91 +10,73 @@ import map.*;
 import java.util.*;
 
 public class Simulation {
-
     private final static String PAUSE_GAME = "3";
     private final static String CONTINUE_GAME = "4";
     private final static String ACCEPTABLE_NUMBERS = "34";
     private final static int VALID_SIZE_INPUT = 1;
+    private final static int PERIOD_SLEEP = 1000;
     private final static String INVALID_ACCEPTABLE_NUMBERS = """
             Неверный ввод
             Нужно ввести цифру 3 или 4.
             """;
 
+    final Scanner SCANNER = new Scanner(System.in);
 
     private boolean Paused = false;
-
     private Field field;
     int moveCounter;
     Renderer renderer = new Renderer();
-    SpawnEntityAction spawnEntityActions = new SpawnEntityAction();
-    MakeMoveCreaturesAction makeMoveCreaturesActions = new MakeMoveCreaturesAction();
-
-    final Scanner SCANNER = new Scanner(System.in);
 
     Simulation(Field field) {
         this.field = field;
     }
 
     void startSimulation() {
-
         Thread thread = new Thread(this::controlSimulation);
         thread.start();
-
-
         while (true) {
-
             if (!Paused) {
                 System.out.println(Message.SETTING_PAUSE);
-
                 nextTurn();
                 try {
-                    Thread.sleep(1000); // Пауза 2 секунды
+                    Thread.sleep(PERIOD_SLEEP);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-
-                if (!isHerbivore(field) || !IsPredator(field)) {
-                    throw new RuntimeException();
-                }
+                gameOver();
             } else {
                 synchronized (this) {
                     System.out.println(Message.CONTINUATION_SIMULATION);
                     try {
                         wait();
                     } catch (InterruptedException e) {
-                        System.out.println("Конец!!!");
-                        ;
                     }
                 }
             }
         }
 
     }
+
+    private void gameOver() {
+        if (!isHerbivore(field) || !IsPredator(field)) {
+            throw new RuntimeException();
+        }
+    }
+
     void nextTurn() {
         moveCounter++;
-
         System.out.printf("""
                 -----------------ХОД: %s -----------------
+                                
                 """, moveCounter);
-        System.out.println();
-
-        makeMoveCreaturesActions.execute(field);
-
-        int[] countHerbifore0Predator1Grass2=field.countCreature();
-
+        int[] countHerbifore0Predator1Grass2 = field.countCreature();
         System.out.printf("""
                 Всего зайцев: %s;
                 Всехо волков: %s.
+                                
                 """, countHerbifore0Predator1Grass2[0], countHerbifore0Predator1Grass2[1]);
-        System.out.println();
-
         renderer.showMap(field);
-
-            for (int countGrass = countHerbifore0Predator1Grass2[2]; countGrass <= countHerbifore0Predator1Grass2[0]; countGrass++) {
-                spawnEntityActions.plantGrass(field);
-            }
-            System.out.println();
-
+        System.out.println();
     }
 
     public Field getField() {
@@ -131,6 +115,7 @@ public class Simulation {
         }
         return input;
     }
+
     boolean IsPredator(Field field) {
         for (Entity entity : field.getAllEntities()) {
             if (entity instanceof Predator) {
@@ -147,5 +132,6 @@ public class Simulation {
         }
         return false;
     }
+
 
 }
