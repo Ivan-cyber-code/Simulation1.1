@@ -1,9 +1,8 @@
 package gameplay;
 
 import action.Action;
-import action.SpawnCreatureAction;
-import action.SpawnEntityAction;
 import action.MakeMoveCreaturesAction;
+import action.SpawnCreatureAction;
 import entity.*;
 import map.*;
 
@@ -20,6 +19,7 @@ public class Simulation {
             Нужно ввести цифру 3 или 4.
             """;
 
+    private final static Action[] turnAction = new Action[]{new MakeMoveCreaturesAction(), new SpawnCreatureAction()};
     final Scanner SCANNER = new Scanner(System.in);
 
     private boolean Paused = false;
@@ -64,19 +64,34 @@ public class Simulation {
     }
 
     void nextTurn() {
+        upCounter();
+        for (Action action : turnAction) {
+            action.execute(field);
+        }
+        showCountCounter();
+        showCountCreature();
+        renderer.showMap(field);
+        System.out.println();
+    }
+
+    private void upCounter() {
         moveCounter++;
+    }
+
+    private void showCountCounter() {
         System.out.printf("""
                 -----------------ХОД: %s -----------------
                                 
                 """, moveCounter);
+    }
+
+    void showCountCreature() {
         int[] countHerbifore0Predator1Grass2 = field.countCreature();
         System.out.printf("""
                 Всего зайцев: %s;
                 Всехо волков: %s.
                                 
                 """, countHerbifore0Predator1Grass2[0], countHerbifore0Predator1Grass2[1]);
-        renderer.showMap(field);
-        System.out.println();
     }
 
     public Field getField() {
@@ -99,15 +114,18 @@ public class Simulation {
 
         }
     }
+
     private synchronized void pauseGame() {
         Paused = true;
     }
+
     private synchronized void resumeGame() {
         Paused = false;
         synchronized (this) {
             notifyAll();
         }
     }
+
     private String checkInput(String input) {
         while (!(ACCEPTABLE_NUMBERS.contains(input) && input.length() == VALID_SIZE_INPUT)) {
             System.out.println(INVALID_ACCEPTABLE_NUMBERS);
@@ -124,6 +142,7 @@ public class Simulation {
         }
         return false;
     }
+
     private boolean isHerbivore(Field field) {
         for (Entity entity : field.getAllEntities()) {
             if (entity instanceof Herbivore) {

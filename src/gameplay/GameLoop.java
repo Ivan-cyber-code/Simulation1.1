@@ -12,9 +12,8 @@ public class GameLoop {
     private final static int VALID_SIZE_INPUT=1;
 
     private final Scanner scanner = new Scanner(System.in);
-    private final Simulation simulation = new Simulation(new Field(createdLine(), createdColumns()));
+    private Simulation simulation ;
     private final Action initAction = new SpawnEntityAction();
-    private final static Action[] turnAction = new Action[]{new SpawnCreatureAction(), new MakeMoveCreaturesAction()};
 
     private int createdColumns() {
         System.out.println(Message.COLUMN_QUERY);
@@ -54,8 +53,10 @@ public class GameLoop {
 
     public void startGame() {
         System.out.println(Message.PREFACE);
+        simulation = new Simulation(new Field(createdLine(), createdColumns()));
         initAction.execute(simulation.getField());
         System.out.println(Message.MESSAGE_CREATION_WORLD);
+        simulation.showCountCreature();
         simulation.renderer.showMap(simulation.getField());
         INNER:
         while (true) {
@@ -86,6 +87,7 @@ public class GameLoop {
                 }
             }
         } catch (RuntimeException runtimeException) {
+            runtimeException.printStackTrace();
             if (simulation.IsPredator(simulation.getField())) {
                 System.out.println(Message.VICTORI_PREDATOR);
                 simulation.renderer.showMap(simulation.getField());

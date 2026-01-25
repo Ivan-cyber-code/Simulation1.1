@@ -11,10 +11,10 @@ public class SpawnEntityAction extends Action {
     private final static int ATTACK_POWER=3;
     private final static int SPEED_HERBIFORE=3;
     private final static int HEALTH_HERBIFORE=7;
-    final static int CONSTLIMITCARD=1/5;
+    final static double CONSTLIMITCARD=0.20;
 
     public void execute(Field field) {
-        int limitEntity = field.countSizeMap()*CONSTLIMITCARD;
+        double limitEntity = field.countSizeMap()*CONSTLIMITCARD;
         while (field.countSizeEntities() < limitEntity) {
             plantGrass(field);
             createHerbivore(field);
@@ -24,8 +24,8 @@ public class SpawnEntityAction extends Action {
         }
     }
 
-    int countMaximumCardLimit(Field field) {
-        return field.countSizeMap() / CONSTLIMITCARD;
+    double countMaximumCardLimit(Field field) {
+        return field.countSizeMap() * CONSTLIMITCARD;
     }
 
     void plantGrass(Field field) {
