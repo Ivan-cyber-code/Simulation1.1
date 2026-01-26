@@ -57,47 +57,6 @@ public class Simulation {
 
     }
 
-    private void gameOver() {
-        if (!isHerbivore(field) || !IsPredator(field)) {
-            throw new RuntimeException();
-        }
-    }
-
-    void nextTurn() {
-        upCounter();
-        for (Action action : turnAction) {
-            action.execute(field);
-        }
-        showCountCounter();
-        showCountCreature();
-        renderer.showMap(field);
-        System.out.println();
-    }
-
-    private void upCounter() {
-        moveCounter++;
-    }
-
-    private void showCountCounter() {
-        System.out.printf("""
-                -----------------ХОД: %s -----------------
-                                
-                """, moveCounter);
-    }
-
-    void showCountCreature() {
-        int[] countHerbifore0Predator1Grass2 = field.countCreature();
-        System.out.printf("""
-                Всего зайцев: %s;
-                Всехо волков: %s.
-                                
-                """, countHerbifore0Predator1Grass2[0], countHerbifore0Predator1Grass2[1]);
-    }
-
-    public Field getField() {
-        return field;
-    }
-
     private void controlSimulation() {
         try {
             while (true) {
@@ -114,18 +73,53 @@ public class Simulation {
 
         }
     }
+    void nextTurn() {
+        upCounter();
+        for (Action action : turnAction) {
+            action.execute(field);
+        }
+        showCountCounter();
+        showCountCreature();
+        renderer.showMap(field);
+        System.out.println();
+    }
+    private void gameOver() {
+        if (!isHerbivore(field) || !IsPredator(field)) {
+            throw new RuntimeException();
+        }
+    }
+
+    private void upCounter() {
+        moveCounter++;
+    }
+    private void showCountCounter() {
+        System.out.printf("""
+                -----------------ХОД: %s -----------------
+                                
+                """, moveCounter);
+    }
+    void showCountCreature() {
+        int[] countHerbifore0Predator1Grass2 = field.countCreature();
+        System.out.printf("""
+                Всего зайцев: %s;
+                Всехо волков: %s.
+                                
+                """, countHerbifore0Predator1Grass2[0], countHerbifore0Predator1Grass2[1]);
+    }
+
+    public Field getField() {
+        return field;
+    }
 
     private synchronized void pauseGame() {
         Paused = true;
     }
-
     private synchronized void resumeGame() {
         Paused = false;
         synchronized (this) {
             notifyAll();
         }
     }
-
     private String checkInput(String input) {
         while (!(ACCEPTABLE_NUMBERS.contains(input) && input.length() == VALID_SIZE_INPUT)) {
             System.out.println(INVALID_ACCEPTABLE_NUMBERS);
@@ -133,7 +127,6 @@ public class Simulation {
         }
         return input;
     }
-
     boolean IsPredator(Field field) {
         for (Entity entity : field.getAllEntities()) {
             if (entity instanceof Predator) {
@@ -142,7 +135,6 @@ public class Simulation {
         }
         return false;
     }
-
     private boolean isHerbivore(Field field) {
         for (Entity entity : field.getAllEntities()) {
             if (entity instanceof Herbivore) {

@@ -15,42 +15,6 @@ public class GameLoop {
     private Simulation simulation ;
     private final Action initAction = new SpawnEntityAction();
 
-    private int createdColumns() {
-        System.out.println(Message.COLUMN_QUERY);
-        return enter(scanner);
-    }
-    private int createdLine() {
-        System.out.println(Message.LINE_QUERY);
-        return enter(scanner);
-    }
-    private int enter(Scanner scanner) {
-        String input = сheckInput(scanner.next());
-        return Integer.parseInt(input);
-    }
-    private String сheckInput(String input) {
-        while (!isNumber(input) || !isValidStartInput(input)) {
-            if (!isNumber(input)) {
-                System.out.println(Message.INVALID_FORMAT_LIMIT_FIELD);
-            }
-            if (!isValidStartInput(input)) {
-                System.out.println(Message.INVALID_CONDITION);
-            }
-            input = scanner.next();
-        }
-        return input;
-    }
-    private boolean isValidStartInput(String input) {
-        return isNumber(input) && Integer.parseInt(input) <= MAX_LIMIT_FIELD && Integer.parseInt(input) >= MIN_LIMIT_FIELD;
-    }
-    private boolean isNumber(String input) {
-        for (char a : input.toCharArray()) {
-            if (!Character.isDigit(a)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void startGame() {
         System.out.println(Message.PREFACE);
         simulation = new Simulation(new Field(createdLine(), createdColumns()));
@@ -87,7 +51,6 @@ public class GameLoop {
                 }
             }
         } catch (RuntimeException runtimeException) {
-            runtimeException.printStackTrace();
             if (simulation.IsPredator(simulation.getField())) {
                 System.out.println(Message.VICTORI_PREDATOR);
                 simulation.renderer.showMap(simulation.getField());
@@ -98,10 +61,44 @@ public class GameLoop {
             simulation.SCANNER.close();
             scanner.close();
         }
-
         scanner.close();
     }
 
+    private int createdColumns() {
+        System.out.println(Message.COLUMN_QUERY);
+        return enter(scanner);
+    }
+    private int createdLine() {
+        System.out.println(Message.LINE_QUERY);
+        return enter(scanner);
+    }
+    private int enter(Scanner scanner) {
+        String input = сheckInput(scanner.next());
+        return Integer.parseInt(input);
+    }
+    private String сheckInput(String input) {
+        while (!isNumber(input) || !isValidStartInput(input)) {
+            if (!isNumber(input)) {
+                System.out.println(Message.INVALID_FORMAT_LIMIT_FIELD);
+            }
+            if (!isValidStartInput(input)) {
+                System.out.println(Message.INVALID_CONDITION);
+            }
+            input = scanner.next();
+        }
+        return input;
+    }
+    private boolean isValidStartInput(String input) {
+        return isNumber(input) && Integer.parseInt(input) <= MAX_LIMIT_FIELD && Integer.parseInt(input) >= MIN_LIMIT_FIELD;
+    }
+    private boolean isNumber(String input) {
+        for (char a : input.toCharArray()) {
+            if (!Character.isDigit(a)) {
+                return false;
+            }
+        }
+        return true;
+    }
     private String makeChoice() {
         String input = scanner.next();
         while (!(VALID_CHOICE.contains(input) && input.length() == VALID_SIZE_INPUT)) {

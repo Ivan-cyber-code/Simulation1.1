@@ -4,6 +4,9 @@ import entity.Creature;
 import entity.*;
 import map.Field;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpawnCreatureAction extends Action {
     private final static int MOVE_REPRODUCTION = 5;
     private final static int END_CREATURE = 0;
@@ -11,7 +14,8 @@ public class SpawnCreatureAction extends Action {
     private SpawnEntityAction spawnEntityAction = new SpawnEntityAction();
 
     public void execute(Field field) {
-        for (Entity entity : field.getAllEntities()) {
+        Map <Coordinates, Entity> copyField = new HashMap<>(field.getEntities());
+        for (Entity entity : copyField.values()) {
             if (makeMoveCreaturesAction.isCreature(entity)) {
                 if (isSpawnCreature(field, entity)) {
                     spawnCreature(entity, field);
