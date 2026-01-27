@@ -8,7 +8,6 @@ import java.util.List;
 
 public class MakeMoveCreaturesAction extends Action {
 
-    private static final double MAXIMUMCARDLIMIT = 0.25;
     private final int END_HEALTH = 0;
 
     public void execute(Field field) {

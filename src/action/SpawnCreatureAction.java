@@ -34,6 +34,6 @@ public class SpawnCreatureAction extends Action {
         }
     }
     private boolean isSpawnCreature(Field field, Entity entity) {
-        return ((Creature) entity).getConterMoves() % MOVE_REPRODUCTION == 0 && ((Creature) entity).getConterMoves() != END_CREATURE && field.countSizeEntities() < field.countSizeMap() * spawnEntityAction.CONSTLIMITCARD;
+        return ((Creature) entity).getConterMoves() % MOVE_REPRODUCTION == 0 && ((Creature) entity).getConterMoves() >= END_CREATURE && field.countSizeEntities() < field.countSizeMap() * spawnEntityAction.CONSTLIMITCARD;
     }
 }
