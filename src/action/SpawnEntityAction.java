@@ -10,7 +10,7 @@ public class SpawnEntityAction extends Action {
     private final static int HEALTH_PREDATOR =2;
     private final static int ATTACK_POWER=3;
     private final static int SPEED_HERBIFORE=3;
-    private final static int HEALTH_HERBIFORE=7;
+    private final static int HEALTH_HERBIFORE=10;
     final static double CONSTLIMITCARD=0.20;
 
     public void execute(Field field) {
